@@ -104,8 +104,34 @@
 
     footer { background: var(--blue); color: rgba(255,255,255,0.4); text-align: center; padding: 11px; font-size: 0.7rem; flex-shrink: 0; }
 
-    @media (max-width: 600px) { .home-panel { display: none; } .flow-inner { padding: 18px 14px 50px; } .tab-btn { padding: 0 10px; font-size: 0.72rem; } }
-    @media print { header, .tab-bar, footer, .nav-under, .btn-row { display: none !important; } }
+    /* JOB CHECKLIST */
+    #job-screen { flex: 1; display: none; overflow-y: auto; }
+    .job-inner { max-width: 720px; margin: 0 auto; padding: 24px 20px 60px; }
+    .job-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; gap: 12px; }
+    .job-header h2 { font-size: 1.2rem; color: var(--blue); }
+    .btn-print { background: var(--blue); color: white; border: none; border-radius: 8px; padding: 10px 16px; font-size: 0.85rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+    .btn-print:hover { filter: brightness(1.1); }
+    .job-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 14px rgba(0,0,0,0.08); margin-bottom: 16px; }
+    .job-card h3 { font-size: 0.92rem; color: var(--blue); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .job-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 16px; margin-bottom: 4px; }
+    .job-field { display: flex; flex-direction: column; gap: 4px; }
+    .job-field label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .job-field input, .job-field select, .job-field textarea { border: 1.5px solid var(--border); border-radius: 6px; padding: 7px 9px; font-size: 0.85rem; font-family: inherit; color: var(--text); }
+    .job-field textarea { resize: vertical; }
+    .job-field.full { grid-column: 1 / -1; }
+    .check-item { display: flex; align-items: center; gap: 9px; padding: 7px 0; font-size: 0.85rem; color: #333; border-bottom: 1px solid #f0f2f6; cursor: pointer; }
+    .check-item:last-child { border-bottom: none; }
+    .check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--blue); flex-shrink: 0; cursor: pointer; }
+    .ci-inline-input { border: 1px solid var(--border); border-radius: 4px; padding: 3px 7px; font-size: 0.82rem; width: 80px; margin-left: 4px; }
+    .job-footer-card { display: flex; gap: 20px; flex-wrap: wrap; }
+    .job-footer-card .job-field { min-width: 200px; }
+
+    @media (max-width: 600px) { .home-panel { display: none; } .flow-inner, .job-inner { padding: 18px 14px 50px; } .tab-btn { padding: 0 10px; font-size: 0.72rem; } }
+    @media print {
+      header, .tab-bar, footer, .nav-under, .btn-row, .btn-print { display: none !important; }
+      .job-field input, .job-field select, .job-field textarea { border: 1px solid #999; }
+      .job-card { box-shadow: none; border: 1px solid #ccc; }
+    }
   </style>
 </head>
 <body>
@@ -125,7 +151,9 @@
   <button class="tab-btn" data-tree="ofm" onclick="start('ofm')">&#128400; Only Flush Manually</button>
   <button class="tab-btn" data-tree="vh"  onclick="start('vh')">&#128296; Valve Hammers</button>
   <button class="tab-btn" data-tree="if"  onclick="start('if')">&#10067; Intermittent Flushing</button>
+  <button class="tab-btn" data-tree="qpf" onclick="start('qpf')">&#128201; Quick / Poor Flush</button>
   <button class="tab-btn" data-tree="rem" onclick="start('rem')">&#128225; Remote / Sensor Setup</button>
+  <button class="tab-btn" data-tree="job" onclick="showJobChecklist()">&#128203; Job Checklist</button>
 </nav>
 
 <div class="main">
@@ -151,11 +179,89 @@
         <button class="symptom-card" onclick="start('ofm')"><span class="sc-icon">&#128400;</span><div class="sc-title">Only Flush Manually</div><div class="sc-desc">Works with override button, not auto sensor</div></button>
         <button class="symptom-card" onclick="start('vh')"><span class="sc-icon">&#128296;</span><div class="sc-title">Valve Hammers</div><div class="sc-desc">Loud banging or hammering on activation</div></button>
         <button class="symptom-card" onclick="start('if')"><span class="sc-icon">&#10067;</span><div class="sc-title">Intermittent Flushing</div><div class="sc-desc">Ghost flushes, or misses flush after use</div></button>
+        <button class="symptom-card" onclick="start('qpf')"><span class="sc-icon">&#128201;</span><div class="sc-title">Quick / Poor Flush</div><div class="sc-desc">Short flush duration or incomplete flush</div></button>
         <button class="symptom-card" onclick="start('rem')"><span class="sc-icon">&#128225;</span><div class="sc-title">Remote / Sensor Setup</div><div class="sc-desc">Detection zone, delay &amp; remote programming</div></button>
+        <button class="symptom-card" onclick="showJobChecklist()"><span class="sc-icon">&#128203;</span><div class="sc-title">Job Checklist</div><div class="sc-desc">Printable jobsite diagnostic form</div></button>
       </div>
     </div>
   </div>
   <div id="flow-screen"><div class="flow-inner" id="flow-inner"></div></div>
+
+  <div id="job-screen">
+    <div class="job-inner">
+      <div class="job-header">
+        <h2>Flush Valve Diagnostic Checklist</h2>
+        <button class="btn-print" onclick="window.print()">&#128424; Print</button>
+      </div>
+
+      <div class="job-card">
+        <h3>Initial Information</h3>
+        <div class="job-grid">
+          <div class="job-field full"><label>Jobsite Name / Address</label><input type="text"></div>
+          <div class="job-field"><label>Contact Name &amp; #</label><input type="text"></div>
+          <div class="job-field"><label>Model Number</label><input type="text"></div>
+          <div class="job-field"><label>GPF Rating</label><input type="text"></div>
+          <div class="job-field"><label>Power Type</label><select><option value="">Select&#8230;</option><option>Battery</option><option>Hardwire</option></select></div>
+          <div class="job-field"><label>Installation Date</label><input type="date"></div>
+          <div class="job-field"><label>PSI at Valve / Building</label><input type="text"></div>
+          <div class="job-field"><label>New Construction?</label><select><option value="">Select&#8230;</option><option>Yes</option><option>No</option></select></div>
+          <div class="job-field"><label>Total # of Toilets</label><input type="number" min="0"></div>
+          <div class="job-field"><label>Total # of Urinals</label><input type="number" min="0"></div>
+          <div class="job-field"><label># Reported Toilets w/ Issues</label><input type="number" min="0"></div>
+          <div class="job-field"><label># Reported Urinals w/ Issues</label><input type="number" min="0"></div>
+          <div class="job-field full"><label>Notes / Additional Details</label><textarea rows="3"></textarea></div>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <h3>&#128683; Unit Does Not Function (No Flush) or Only Flushes Manually</h3>
+        <label class="check-item"><input type="checkbox"> Is the supply stop fully open?</label>
+        <label class="check-item"><input type="checkbox"> Repeated Double Flash on Sensor?</label>
+        <label class="check-item"><input type="checkbox"> If hardwired, more than 10' of wire between units?</label>
+        <label class="check-item"><input type="checkbox"> Does the sensor flash after power cycle (30&#8211;60 sec)?</label>
+        <label class="check-item"><input type="checkbox"> Does the solenoid click when activating the sensor (hold hand 10&#8211;12 sec)?</label>
+        <label class="check-item"><input type="checkbox"> Does the manual override button work (press 3+ sec)?</label>
+        <label class="check-item"><input type="checkbox"> Cable connections solid / no damage?</label>
+      </div>
+
+      <div class="job-card">
+        <h3>&#128167; Continuously Flushing / Running</h3>
+        <label class="check-item"><input type="checkbox"> Does the unit stop flushing when the manual button is released?</label>
+        <label class="check-item"><input type="checkbox"> Manual override is stuck &#8212; does it stop when pulling on the button?</label>
+        <label class="check-item"><input type="checkbox"> Removed piston/solenoid to check for debris / o-rings?</label>
+        <label class="check-item"><input type="checkbox"> Priming (flush a few times) helped?</label>
+      </div>
+
+      <div class="job-card">
+        <h3>&#128296; Water Hammer</h3>
+        <label class="check-item"><input type="checkbox"> Static pressure over 80 PSI (checked at valve)?</label>
+        <label class="check-item"><input type="checkbox"> Water hammer arrestor installed and in proper location?</label>
+      </div>
+
+      <div class="job-card">
+        <h3>&#10067; Intermittent / Ghost Flushing</h3>
+        <label class="check-item"><input type="checkbox"> Detection Zone checked / adjusted (remote factory setting 14)?</label>
+        <label class="check-item"><input type="checkbox"> Possible reflections present (hi-vis vest, mirrors, shiny surfaces)?</label>
+      </div>
+
+      <div class="job-card">
+        <h3>&#128201; Quick / Poor Flush</h3>
+        <div class="check-item">Flush duration (seconds): <input type="text" class="ci-inline-input"></div>
+        <label class="check-item"><input type="checkbox"> Can you get a complete flush using the manual override button?</label>
+        <label class="check-item"><input type="checkbox"> Is the supply stop fully open?</label>
+      </div>
+
+      <div class="job-card">
+        <h3>Sign-Off</h3>
+        <div class="job-footer-card">
+          <div class="job-field"><label>Technician</label><input type="text"></div>
+          <div class="job-field"><label>Date</label><input type="date"></div>
+        </div>
+      </div>
+
+      <div class="nav-under"><button class="btn-back-sm" onclick="goHome()">&#8617; Back to Home</button></div>
+    </div>
+  </div>
 </div>
 
 <footer>American Standard Selectronic&#174; Ultima &nbsp;|&nbsp; For professional use. Always follow local plumbing codes.</footer>
@@ -456,6 +562,16 @@ const trees = {
     sol_page3:    { type:"solution", style:"info", title:"&#128167; Page 3 &#8212; Flush Volume &amp; Timing", body:"Controls flush volume and flush activation time.\n\n&#9658; FLUSH VOLUME: adjusts water used per flush cycle.\n&#9658; FLASH TIME: customizes and can decrease total flush activation time.\n\n&#9888; Pages 3 and beyond are site-specific &#8212; adjust only as needed. The first 2 pages cover most day-to-day adjustments.\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.", parts:[] },
     sol_send:     { type:"solution", style:"info", title:"&#128190; Page 6 &#8212; Send / Save Settings to Sensor", body:"After adjusting any settings, you must SEND them:\n\n1. Hold remote 2&#8211;3\" directly in front of the sensor\n2. Navigate to Page 6 on the remote display\n3. Press DOWN arrow to highlight SEND\n4. Press OK\n5. Select YES and press OK\n\n&#9658; SUCCESS: display shows 'Programming was saved to flash'\n\n&#9658; IF SEND FAILS:\n&#8226; Check battery &#8212; low battery prevents reliable transmission\n&#8226; Confirm remote is aimed directly at sensor eye\n&#8226; Retry from 2&#8211;3\" distance", parts:[{num:"A923654-0020A",name:"Battery 6V CR-P2"}] },
     sol_monitor:  { type:"solution", style:"info", title:"&#128202; Monitoring &#8212; Live Sensor Data", body:"After connecting, press OK on MONITORING to view:\n\n&#8226; Flush count &#8212; total flushes recorded\n&#8226; Battery level &#8212; percentage remaining\n&#8226; Water usage &#8212; consumption data\n&#8226; Counter/Balance &#8212; additional diagnostics\n\n&#9889; BATTERY INDICATOR\n&gt;80% = Ready / OK &#8212; safe to program\n&lt;80% = Replace battery before programming", parts:[{num:"A923654-0020A",name:"Battery 6V CR-P2"},{num:"A923654-0070A",name:"CRV-2 Battery"}] }
+  }},
+
+  qpf: { label:"Quick / Poor Flush", steps: {
+    s1: { type:"question", total:3, idx:0, q:"Is the supply stop fully open?", hint:"The supply stop should be fully open (counter-clockwise all the way). A partially closed stop restricts flow and can cause a weak or short flush.", yes:"s2", no:"act_open_stop" },
+    act_open_stop: { type:"action", total:3, idx:0, title:"Open Supply Stop Fully", detail:"Open the supply stop one full counter-clockwise rotation. Then retest the flush.", next:"s2" },
+    s2: { type:"question", total:3, idx:1, q:"Using the manual override button, do you get a complete, full-volume flush?", hint:"Press and hold the manual override button. Compare the volume and duration of this flush to what the sensor produces automatically.", yes:"s3", no:"sol_mechanical" },
+    s3: { type:"question", total:3, idx:2, q:"Is the automatic (sensor-triggered) flush noticeably shorter or weaker than the manual flush?", hint:"Time the flush duration triggered by the sensor, then compare it to the manual flush from the step above.", yes:"sol_volume", no:"sol_luck" },
+    sol_mechanical: { type:"solution", style:"warn", title:"&#128296; Inspect Piston Assembly &amp; O-Ring", body:"The manual flush itself is incomplete or weak, pointing to a mechanical restriction rather than a settings issue.\n\nInspect the piston assembly and o-ring for debris, mineral buildup, or wear. Clean or replace as needed.", parts:[{num:"M970694-0070A", name:"Solenoid &amp; Piston Assembly"}] },
+    sol_volume: { type:"solution", style:"info", title:"&#128167; Adjust Flush Volume &amp; Timing (Remote Page 3)", body:"Manual flush is full and complete, but the automatic flush is short &#8212; this points to the flush volume or activation time setting on the sensor, not a mechanical fault.\n\nUsing the sensor remote:\n&#9658; Page 3 &#8212; FLUSH VOLUME: increase water used per flush cycle\n&#9658; Page 3 &#8212; FLASH TIME: increase total flush activation time\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.", parts:[{num:"60SXRCT",name:"RED Remote &#8212; standard sensors"},{num:"60SXRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}] },
+    sol_luck: { type:"solution", style:"warn", title:"&#128640; Escalate &#8212; Further Diagnosis Needed", body:"Standard troubleshooting steps have been exhausted.\n\nContact American Standard technical support or escalate to a licensed service technician for further diagnosis.", parts:[] }
   }}
 };
 
@@ -468,14 +584,23 @@ function goHome() {
   currentTree = null; history = [];
   document.getElementById("home").style.display = "flex";
   document.getElementById("flow-screen").style.display = "none";
+  document.getElementById("job-screen").style.display = "none";
   setActiveTab("");
 }
 function start(treeId) {
   currentTree = trees[treeId]; history = [];
   document.getElementById("home").style.display = "none";
   document.getElementById("flow-screen").style.display = "block";
+  document.getElementById("job-screen").style.display = "none";
   setActiveTab(treeId);
   goTo(Object.keys(currentTree.steps)[0]);
+}
+function showJobChecklist() {
+  currentTree = null; history = [];
+  document.getElementById("home").style.display = "none";
+  document.getElementById("flow-screen").style.display = "none";
+  document.getElementById("job-screen").style.display = "block";
+  setActiveTab("job");
 }
 function goTo(stepId) {
   history.push(stepId);
