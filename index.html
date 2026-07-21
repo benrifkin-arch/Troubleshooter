@@ -1032,28 +1032,6 @@ function render(stepId) {
       ${partsHtml}</div>${nav}`;
   }
 }
-screen.querySelectorAll('textarea').forEach(function(el){ el.value = ''; });
-    screen.querySelectorAll('input[type="number"]').forEach(function(el){ el.value = ''; });
-  }
-
-  // Auto-grow textareas in checklist
-  document.addEventListener('input', function(e) {
-    if (e.target.tagName === 'TEXTAREA' && e.target.closest('#job-screen')) {
-      e.target.style.height = 'auto';
-      e.target.style.height = e.target.scrollHeight + 'px';
-    }
-  });
-s.querySelectorAll('textarea').forEach(function(el){ el.value = ''; });
-    s.querySelectorAll('input[type="number"]').forEach(function(el){ el.value = ''; });
-  }
-  // Auto-grow textareas in checklist
-  document.addEventListener('input', function(e) {
-    if (e.target.tagName === 'TEXTAREA' && e.target.closest && e.target.closest('#job-screen')) {
-      e.target.style.height = 'auto';
-      e.target.style.height = e.target.scrollHeight + 'px';
-    }
-  });
-
   // DIAGNOSTIC CHECKLIST
   function clearChecklist() {
     if (!confirm('Clear all checklist data? This cannot be undone.')) return;
