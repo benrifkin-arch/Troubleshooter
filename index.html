@@ -126,7 +126,112 @@
     .job-footer-card { display: flex; gap: 20px; flex-wrap: wrap; }
     .job-footer-card .job-field { min-width: 200px; }
 
-    @media (max-width: 600px) { .home-panel { display: none; } .flow-inner, .job-inner { padding: 18px 14px 50px; } .tab-btn { padding: 0 10px; font-size: 0.72rem; } }
+    /* ═══════════════════════════════════
+   RESPONSIVE LAYOUT
+   desktop: 769px+  tablet: 481–768px  phone: ≤480px
+   ═══════════════════════════════════ */
+
+/* ── TABLET (iPad portrait, small laptop) ── */
+@media (max-width: 768px) {
+  header h1 { font-size: 0.92rem; }
+  .tab-btn { padding: 0 11px; font-size: 0.75rem; }
+  .home-panel { width: 200px; padding: 20px 14px; }
+  .home-right { padding: 18px; }
+  .symptom-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .flow-inner { padding: 20px 16px 50px; }
+  /* Checklist */
+  .cl-content { padding: 16px 14px 50px; }
+  .job-inner { padding: 16px 14px 50px; }
+  .info-grid { gap: 10px 14px; }
+  .check-label { font-size: 0.86rem; }
+  .arrow-row { font-size: 0.8rem; }
+  .yn-pill { padding: 5px 12px; font-size: 0.78rem; }
+  .parts-table th, .parts-table td { padding: 5px 7px; font-size: 0.8rem; }
+  .ref-table th, .ref-table td { padding: 6px 10px; font-size: 0.8rem; }
+  .form-footer { gap: 14px; }
+  .footer-left textarea { width: 220px; }
+}
+
+/* ── PHONE (≤480px) ── */
+@media (max-width: 480px) {
+  /* Header */
+  header { padding: 10px 12px; gap: 8px; }
+  header h1 { font-size: 0.82rem; }
+  header .sub { font-size: 0.65rem; }
+  header img { height: 26px !important; }
+
+  /* Tab bar — keep scrollable, shrink buttons */
+  .tab-btn { padding: 0 8px; font-size: 0.68rem; height: 40px; gap: 3px; }
+
+  /* Home screen */
+  .home-panel { display: none; }
+  .home-right { padding: 12px; }
+  .home-intro h2 { font-size: 0.98rem; }
+  .home-intro p { font-size: 0.8rem; }
+  .notice { font-size: 0.76rem; padding: 9px 11px; }
+  .symptom-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .symptom-card { padding: 12px 10px; }
+  .symptom-card .sc-icon { font-size: 1.2rem; margin-bottom: 5px; }
+  .symptom-card .sc-title { font-size: 0.8rem; }
+  .symptom-card .sc-desc { font-size: 0.68rem; }
+
+  /* Diagnostic flow */
+  .flow-inner { padding: 14px 12px 50px; }
+  .step-q { font-size: 0.95rem; }
+  .step-hint { font-size: 0.78rem; }
+  .btn-yes, .btn-no, .btn-next, .btn-choice { font-size: 0.82rem; padding: 10px 12px; }
+  .action-banner .ab-text { font-size: 0.8rem; }
+  .sol-title { font-size: 0.95rem; }
+  .sol-body { font-size: 0.8rem; }
+
+  /* Checklist container */
+  .job-inner { padding: 12px 10px 50px; }
+  .cl-content { padding: 12px 10px 50px; }
+  .job-header { flex-wrap: wrap; gap: 8px; }
+  .job-header h2 { font-size: 1rem; }
+
+  /* Info grid: single column on phone */
+  .info-grid { grid-template-columns: 1fr; gap: 10px; }
+
+  /* Section headers */
+  .sec-head { padding: 8px 12px; }
+  .sec-head h2 { font-size: 0.85rem; }
+  .sec-head .sec-sub { font-size: 0.68rem; }
+
+  /* Check items */
+  .check-row { padding: 8px 12px 4px; gap: 8px; }
+  .check-row.yn-row { padding: 8px 12px 2px; }
+  .check-label { font-size: 0.82rem; line-height: 1.4; }
+  .check-notes { padding: 0 12px 8px 12px; }
+  .check-notes textarea { font-size: 0.78rem; }
+
+  /* YN buttons — tighter on phone */
+  .yn-group { padding: 3px 12px 8px; gap: 6px; }
+  .yn-pill { padding: 4px 10px; font-size: 0.74rem; }
+
+  /* Arrow rows */
+  .arrow-row { padding: 5px 12px 5px 22px; font-size: 0.76rem; }
+
+  /* Parts tables */
+  .parts-section { padding: 10px 12px; }
+  .parts-table { font-size: 0.75rem; }
+  .parts-table th, .parts-table td { padding: 4px 5px; }
+  .parts-table .qty-input { width: 44px; padding: 2px 4px; }
+  .parts-table .part-num { font-size: 0.73rem; }
+  .ref-table th, .ref-table td { padding: 5px 8px; font-size: 0.75rem; }
+  .ref-table .ref-num { font-size: 0.73rem; }
+
+  /* Form footer */
+  .form-footer { flex-direction: column; gap: 10px; }
+  .footer-left textarea { width: 100%; }
+  .footer-right { text-align: left; font-size: 0.76rem; }
+
+  /* Parts diagram */
+  .parts-diagram { padding: 12px; }
+  .parts-diagram img { max-width: 100%; }
+
+  footer { font-size: 0.6rem; padding: 8px; }
+}
     @media print {
       header, .tab-bar, footer, .nav-under, .btn-row, .btn-print, .cl-btn-clear, .job-header { display: none !important; }
       .job-field input, .job-field select, .job-field textarea { border: 1px solid #999; }
@@ -233,6 +338,22 @@
   @page{margin:0.6in;}
 }
 
+
+    /* YES / NO / N/A BUTTONS */
+    .check-row.yn-row { padding: 10px 14px 4px; display: block; }
+    .yn-group { display: flex; gap: 8px; padding: 4px 14px 10px; }
+    .yn-label { cursor: pointer; }
+    .yn-label input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .yn-pill {
+      display: inline-block; padding: 5px 15px; border: 1.5px solid #ddd;
+      border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: #888;
+      transition: all 0.15s; user-select: none; background: white;
+    }
+    .yn-label:hover .yn-pill { border-color: #aaa; color: #555; }
+    .yn-label.yes input[type="radio"]:checked ~ .yn-pill { background: #1e8a44; border-color: #1e8a44; color: white; }
+    .yn-label.no  input[type="radio"]:checked ~ .yn-pill { background: #CC0000; border-color: #CC0000; color: white; }
+    .yn-label.na  input[type="radio"]:checked ~ .yn-pill { background: #666;    border-color: #666;    color: white; }
+
     /* END CHECKLIST STYLES */
   </style>
 </head>
@@ -337,15 +458,25 @@
   <div class="check-wrap">
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Is the supply stop fully open?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — continue   ☐ No — see below"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Is the supply stop fully open?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q1" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q1" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q1" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If NO: Open stop one full rotation WHILE holding the manual override button, then release</div>
     <div class="arrow-row warn">→ Does unit now flush?&nbsp;&nbsp; ☐ Yes — continue to next step&nbsp;&nbsp; ☐ No → Replace Manual Override Button &nbsp;M970784-0020A</div>
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Is there a Repeated Double Flash on the sensor LED?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — check voltage   ☐ No — go to power cycle"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Is there a Repeated Double Flash on the sensor LED?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q2" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q2" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q2" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If YES (double flash): Test voltage at power supply. Is reading &lt; 6V DC?</div>
     <div class="arrow-row warn">→ ☐ Yes &lt; 6V → Replace Power Supply (PK01-HAC or PK01-PAC) or Battery</div>
@@ -357,15 +488,25 @@
     </div>
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Does sensor flash for 5 seconds after reconnecting?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — continue   ☐ No — see below"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Does sensor flash for 5 seconds after reconnecting?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q3" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q3" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q3" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No →</div>
     <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor (see GPF # below). Issue resolved? &nbsp;☐ Yes &nbsp;☐ No → Escalate</div>
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Push Manual Override button — does unit flush?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — inspect piston   ☐ No → replace button"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Push Manual Override button — does unit flush?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q4" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q4" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q4" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
     <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
@@ -396,8 +537,13 @@
   <div class="check-wrap">
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Is there a Repeated Double Flash on the sensor LED?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — check voltage   ☐ No — power cycle"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Is there a Repeated Double Flash on the sensor LED?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q5" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q5" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q5" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If YES (double flash): Test voltage at power supply. Is reading &lt; 6V DC?</div>
     <div class="arrow-row warn">→ ☐ Yes &lt; 6V → Replace Power Supply (PK01-HAC or PK01-PAC) or Battery</div>
@@ -409,15 +555,25 @@
     </div>
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Does sensor flash for 5 seconds after reconnecting?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — continue   ☐ No — see below"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Does sensor flash for 5 seconds after reconnecting?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q6" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q6" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q6" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No →</div>
     <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No → Escalate</div>
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Push Manual Override — does unit flush?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — inspect piston   ☐ No → replace button"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Push Manual Override — does unit flush?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q7" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q7" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q7" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
     <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
@@ -452,8 +608,13 @@
     </div>
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Does unit STOP flushing when the manual button is released?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes → power cycle   ☐ No → check button"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Does unit STOP flushing when the manual button is released?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q8" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q8" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q8" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If YES (stops on release): Disconnect &amp; reconnect power supply for 10 sec → continue to sensor flash check</div>
     <div class="arrow-row">→ If NO (keeps flushing): Push manual override. Does button return to original position freely?</div>
@@ -461,15 +622,25 @@
     <div class="arrow-row">→ ☐ Yes (button free) → Continue to sensor flash check below</div>
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Does sensor flash for 5 seconds?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — continue   ☐ No — see below"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Does sensor flash for 5 seconds?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q9" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q9" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q9" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No →</div>
     <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No → Escalate</div>
 
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Push Manual Override — does unit flush?</span></div>
-      <div class="check-notes"><textarea placeholder="Outcome / notes...  ☐ Yes — inspect piston   ☐ No → replace button"></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Push Manual Override — does unit flush?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q10" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q10" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q10" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
     <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
@@ -498,20 +669,40 @@
   </div>
   <div class="check-wrap">
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Static pressure &gt; 80 PSI (checked at valve)?</span></div>
+      <div class="check-row yn-row"><span class="check-label">Static pressure &gt; 80 PSI (checked at valve)?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q11" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q11" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q11" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
       <div class="check-notes"><textarea placeholder="PSI reading: ________"></textarea></div>
     </div>
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Water hammer arrestors installed at correct locations?</span></div>
-      <div class="check-notes"><textarea placeholder="☐ Yes   ☐ No   Notes..."></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Water hammer arrestors installed at correct locations?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q12" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q12" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q12" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Is a Pressure Reducing Valve (PRV) installed?</span></div>
-      <div class="check-notes"><textarea placeholder="☐ Yes   ☐ No   Notes..."></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Is a Pressure Reducing Valve (PRV) installed?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q13" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q13" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q13" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Does hammering stop when holding the manual override button?</span></div>
-      <div class="check-notes"><textarea placeholder="☐ Yes   ☐ No   Notes..."></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Does hammering stop when holding the manual override button?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q14" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q14" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q14" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If YES → pressure surge confirmed. Install PRV + hammer arrestor per IDAM instructions</div>
     <div class="arrow-row warn">→ If arrestor installed but hammer persists → Replace piston with slow-close version &nbsp;M570619-0070A</div>
@@ -538,18 +729,33 @@
       <div class="check-notes"><textarea placeholder="Notes on what you're observing..."></textarea></div>
     </div>
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Detection zone checked / adjusted using sensor remote?</span></div>
+      <div class="check-row yn-row"><span class="check-label">Detection zone checked / adjusted using sensor remote?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q15" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q15" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q15" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
       <div class="check-notes"><textarea placeholder="Current level: ____   (factory default = 14)   New level: ____"></textarea></div>
     </div>
     <div class="arrow-row">→ Ghost flush → Decrease level below 14 to reduce range away from reflective surfaces</div>
     <div class="arrow-row">→ Missed flush → Increase level above 14 to widen detection zone</div>
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Possible reflections present? (mirrors, hi-vis vest, shiny partitions, polished floors)</span></div>
-      <div class="check-notes"><textarea placeholder="☐ Yes   ☐ No   Describe location / material..."></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Possible reflections present? (mirrors, hi-vis vest, shiny partitions, polished floors)</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q16" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q16" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q16" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Objects or signage blocking the sensor face?</span></div>
-      <div class="check-notes"><textarea placeholder="☐ Yes   ☐ No   Notes..."></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Objects or signage blocking the sensor face?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q17" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q17" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q17" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="parts-section">
       <div class="parts-label">Parts Required</div>
@@ -571,16 +777,26 @@
   </div>
   <div class="check-wrap">
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Is the supply stop fully open?</span></div>
-      <div class="check-notes"><textarea placeholder="☐ Yes   ☐ No   Notes..."></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Is the supply stop fully open?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q18" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q18" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q18" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="check-item">
       <div class="check-row"><input type="checkbox"/><span class="check-label">Flush duration using manual override (seconds)</span></div>
       <div class="check-notes"><textarea placeholder="Duration: _______ sec"></textarea></div>
     </div>
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Can you get a complete flush using the manual override button?</span></div>
-      <div class="check-notes"><textarea placeholder="☐ Yes   ☐ No   Notes..."></textarea></div>
+      <div class="check-row yn-row"><span class="check-label">Can you get a complete flush using the manual override button?</span></div>
+      <div class="yn-group">
+        <label class="yn-label yes"><input type="radio" name="q19" value="yes"><span class="yn-pill">&#10003; Yes</span></label>
+        <label class="yn-label no"><input type="radio" name="q19" value="no"><span class="yn-pill">&#10007; No</span></label>
+        <label class="yn-label na"><input type="radio" name="q19" value="na"><span class="yn-pill">N/A</span></label>
+      </div>
+      <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="check-item">
       <div class="check-row"><input type="checkbox"/><span class="check-label">Static water pressure at valve (PSI)</span></div>
