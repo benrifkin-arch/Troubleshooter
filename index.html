@@ -367,6 +367,14 @@
     }
     .btn-video:hover { filter: brightness(1.12); }
 
+
+    /* ADDITIONAL TOOLS SECTION */
+    .tools-section { margin-top: 22px; padding-top: 18px; border-top: 1.5px solid var(--border); }
+    .tools-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #bbb; margin-bottom: 10px; }
+    .tools-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tool-card { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: white; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.82rem; font-weight: 600; color: var(--text); text-decoration: none; transition: border-color 0.15s, color 0.15s; }
+    .tool-card:hover { border-color: var(--blue); color: var(--blue); }
+    .tool-card .tc-icon { font-size: 1.1rem; }
     /* END CHECKLIST STYLES */
   </style>
 </head>
@@ -414,8 +422,13 @@
         <button class="symptom-card" onclick="start('vh')"><span class="sc-icon">&#128296;</span><div class="sc-title">Valve Hammers</div><div class="sc-desc">Loud banging or hammering on activation</div></button>
         <button class="symptom-card" onclick="start('if')"><span class="sc-icon">&#10067;</span><div class="sc-title">Intermittent Flushing</div><div class="sc-desc">Ghost flushes, or misses flush after use</div></button>
         <button class="symptom-card" onclick="start('qpf')"><span class="sc-icon">&#128201;</span><div class="sc-title">Quick / Poor Flush</div><div class="sc-desc">Short flush duration or incomplete flush</div></button>
-        <button class="symptom-card" onclick="window.location.href='remote.html'"><span class="sc-icon">&#128225;</span><div class="sc-title">Remote / Sensor Setup</div><div class="sc-desc">Detection zone, delay &amp; remote programming</div></button>
-        <button class="symptom-card" onclick="window.location.href='checklist.html'"><span class="sc-icon">&#128203;</span><div class="sc-title">Diagnostic Checklist</div><div class="sc-desc">Full printable diagnostic form with parts</div></button>
+      </div>
+      <div class="tools-section">
+        <div class="tools-label">Additional Tools</div>
+        <div class="tools-grid">
+          <a href="remote.html" class="tool-card"><span class="tc-icon">&#128225;</span> Remote &amp; Sensor Setup</a>
+          <a href="checklist.html" class="tool-card"><span class="tc-icon">&#128203;</span> Diagnostic Checklist</a>
+        </div>
       </div>
     </div>
   </div>
