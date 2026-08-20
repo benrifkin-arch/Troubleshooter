@@ -368,7 +368,10 @@
     .btn-video:hover { filter: brightness(1.12); }
 
     /* END CHECKLIST STYLES */
-  </style>
+  
+.arrow-cb{width:14px;height:14px;accent-color:#7B4F00;cursor:pointer;vertical-align:middle;margin:0 2px 1px 0;}
+.arrow-row .arrow-cb,.arrow-row.warn .arrow-cb,.arrow-row.good .arrow-cb{accent-color:#7B4F00;}
+</style>
 </head>
 <body>
 
@@ -444,12 +447,12 @@
     <div class="info-field"><label>Jobsite Name / Address</label><textarea rows="1" placeholder="Enter address..."></textarea></div>
     <div class="info-field"><label>Contact Name &amp; Phone #</label><textarea rows="1" placeholder="Name and number..."></textarea></div>
     <div class="info-field"><label>Model Number &amp; GPF Rating</label><textarea rows="1" placeholder="Model # and GPF..."></textarea></div>
-    <div class="info-field"><label>Power Type</label><textarea rows="1" placeholder="☐ Battery   ☐ Hardwire"></textarea></div>
+    <div class="info-field"><label>Power Type</label><textarea rows="1" placeholder="<input type="checkbox" class="arrow-cb"> Battery   <input type="checkbox" class="arrow-cb"> Hardwire"></textarea></div>
     <div class="info-field"><label>Installation Date</label><textarea rows="1" placeholder="Date installed..."></textarea></div>
     <div class="info-field"><label>PSI at Valve / Building</label><textarea rows="1" placeholder="PSI reading..."></textarea></div>
     <div class="info-field"><label>Total # Toilets &nbsp;&nbsp; # with Issues</label><textarea rows="1" placeholder="e.g.  32 total / 4 with issues"></textarea></div>
     <div class="info-field"><label>Total # Urinals &nbsp;&nbsp; # with Issues</label><textarea rows="1" placeholder="e.g.  18 total / 1 with issue"></textarea></div>
-    <div class="info-field"><label>New Construction?</label><textarea rows="1" placeholder="☐ Yes   ☐ No"></textarea></div>
+    <div class="info-field"><label>New Construction?</label><textarea rows="1" placeholder="<input type="checkbox" class="arrow-cb"> Yes   <input type="checkbox" class="arrow-cb"> No"></textarea></div>
     <div class="info-field"><label>Technician Name</label><textarea rows="1" placeholder="Technician name..."></textarea></div>
     <div class="info-field info-notes" style="grid-column:1/-1;"><label>Notes / Additional Details</label><textarea rows="3" placeholder="Any additional context, site conditions, or observations..."></textarea></div>
   </div>
@@ -473,7 +476,7 @@
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If NO: Open stop one full rotation WHILE holding the manual override button, then release</div>
-    <div class="arrow-row warn">→ Does unit now flush?&nbsp;&nbsp; ☐ Yes — continue to next step&nbsp;&nbsp; ☐ No → Replace Manual Override Button &nbsp;M970784-0020A</div>
+    <div class="arrow-row warn">→ Does unit now flush?&nbsp;&nbsp; <input type="checkbox" class="arrow-cb"> Yes — continue to next step&nbsp;&nbsp; <input type="checkbox" class="arrow-cb"> No → Replace Manual Override Button &nbsp;M970784-0020A</div>
 
     <div class="check-item">
       <div class="check-row yn-row"><span class="check-label">Is there a Repeated Double Flash on the sensor LED?</span></div>
@@ -485,8 +488,8 @@
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If YES (double flash): Test voltage at power supply. Is reading &lt; 6V DC?</div>
-    <div class="arrow-row warn">→ ☐ Yes &lt; 6V → Replace Power Supply (PK01-HAC or PK01-PAC) or Battery</div>
-    <div class="arrow-row warn">→ ☐ No ≥ 6V → Is wiring distance &gt; 10 ft or has wiring been extended? &nbsp;☐ Yes → Check / shorten wiring run</div>
+    <div class="arrow-row warn">→ <input type="checkbox" class="arrow-cb"> Yes &lt; 6V → Replace Power Supply (PK01-HAC or PK01-PAC) or Battery</div>
+    <div class="arrow-row warn">→ <input type="checkbox" class="arrow-cb"> No ≥ 6V → Is wiring distance &gt; 10 ft or has wiring been extended? &nbsp;<input type="checkbox" class="arrow-cb"> Yes → Check / shorten wiring run</div>
 
     <div class="check-item">
       <div class="check-row"><input type="checkbox"/><span class="check-label">Disconnect &amp; reconnect power supply for 10 seconds</span></div>
@@ -502,8 +505,8 @@
       </div>
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
-    <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No →</div>
-    <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor (see GPF # below). Issue resolved? &nbsp;☐ Yes &nbsp;☐ No → Escalate</div>
+    <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;<input type="checkbox" class="arrow-cb"> Yes &nbsp;<input type="checkbox" class="arrow-cb"> No →</div>
+    <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor (see GPF # below). Issue resolved? &nbsp;<input type="checkbox" class="arrow-cb"> Yes &nbsp;<input type="checkbox" class="arrow-cb"> No → Escalate</div>
 
     <div class="check-item">
       <div class="check-row yn-row"><span class="check-label">Push Manual Override button — does unit flush?</span></div>
@@ -514,8 +517,8 @@
       </div>
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
-    <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
-    <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
+    <div class="arrow-row good">→ <input type="checkbox" class="arrow-cb"> Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
+    <div class="arrow-row warn">→ <input type="checkbox" class="arrow-cb"> No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
 
     <div class="parts-section">
       <div class="parts-label">Parts Required</div>
@@ -552,8 +555,8 @@
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If YES (double flash): Test voltage at power supply. Is reading &lt; 6V DC?</div>
-    <div class="arrow-row warn">→ ☐ Yes &lt; 6V → Replace Power Supply (PK01-HAC or PK01-PAC) or Battery</div>
-    <div class="arrow-row warn">→ ☐ No ≥ 6V → Is wiring distance &gt; 10 ft or has wiring been extended? &nbsp;☐ Yes → Check / shorten wiring run</div>
+    <div class="arrow-row warn">→ <input type="checkbox" class="arrow-cb"> Yes &lt; 6V → Replace Power Supply (PK01-HAC or PK01-PAC) or Battery</div>
+    <div class="arrow-row warn">→ <input type="checkbox" class="arrow-cb"> No ≥ 6V → Is wiring distance &gt; 10 ft or has wiring been extended? &nbsp;<input type="checkbox" class="arrow-cb"> Yes → Check / shorten wiring run</div>
 
     <div class="check-item">
       <div class="check-row"><input type="checkbox"/><span class="check-label">Disconnect &amp; reconnect power supply for 10 seconds</span></div>
@@ -569,8 +572,8 @@
       </div>
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
-    <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No →</div>
-    <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No → Escalate</div>
+    <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;<input type="checkbox" class="arrow-cb"> Yes &nbsp;<input type="checkbox" class="arrow-cb"> No →</div>
+    <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor. Issue resolved? &nbsp;<input type="checkbox" class="arrow-cb"> Yes &nbsp;<input type="checkbox" class="arrow-cb"> No → Escalate</div>
 
     <div class="check-item">
       <div class="check-row yn-row"><span class="check-label">Push Manual Override — does unit flush?</span></div>
@@ -581,8 +584,8 @@
       </div>
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
-    <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
-    <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
+    <div class="arrow-row good">→ <input type="checkbox" class="arrow-cb"> Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
+    <div class="arrow-row warn">→ <input type="checkbox" class="arrow-cb"> No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
 
     <div class="parts-section">
       <div class="parts-label">Parts Required</div>
@@ -624,8 +627,8 @@
     </div>
     <div class="arrow-row">→ If YES (stops on release): Disconnect &amp; reconnect power supply for 10 sec → continue to sensor flash check</div>
     <div class="arrow-row">→ If NO (keeps flushing): Push manual override. Does button return to original position freely?</div>
-    <div class="arrow-row warn">→ ☐ No (button stuck) → Replace Manual Override Button &nbsp;M970784-0020A</div>
-    <div class="arrow-row">→ ☐ Yes (button free) → Continue to sensor flash check below</div>
+    <div class="arrow-row warn">→ <input type="checkbox" class="arrow-cb"> No (button stuck) → Replace Manual Override Button &nbsp;M970784-0020A</div>
+    <div class="arrow-row">→ <input type="checkbox" class="arrow-cb"> Yes (button free) → Continue to sensor flash check below</div>
 
     <div class="check-item">
       <div class="check-row yn-row"><span class="check-label">Does sensor flash for 5 seconds?</span></div>
@@ -636,8 +639,8 @@
       </div>
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
-    <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No →</div>
-    <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor. Issue resolved? &nbsp;☐ Yes &nbsp;☐ No → Escalate</div>
+    <div class="arrow-row warn">→ If NO: Replace Power Supply or Battery. Issue resolved? &nbsp;<input type="checkbox" class="arrow-cb"> Yes &nbsp;<input type="checkbox" class="arrow-cb"> No →</div>
+    <div class="arrow-row warn">→ Inspect wiring for breaks / corrosion. Replace Sensor. Issue resolved? &nbsp;<input type="checkbox" class="arrow-cb"> Yes &nbsp;<input type="checkbox" class="arrow-cb"> No → Escalate</div>
 
     <div class="check-item">
       <div class="check-row yn-row"><span class="check-label">Push Manual Override — does unit flush?</span></div>
@@ -648,8 +651,8 @@
       </div>
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
-    <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
-    <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
+    <div class="arrow-row good">→ <input type="checkbox" class="arrow-cb"> Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
+    <div class="arrow-row warn">→ <input type="checkbox" class="arrow-cb"> No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
 
     <div class="parts-section">
       <div class="parts-label">Parts Required</div>
@@ -731,7 +734,7 @@
   </div>
   <div class="check-wrap">
     <div class="check-item">
-      <div class="check-row"><input type="checkbox"/><span class="check-label">Type: &nbsp;☐ Ghost flush (flushes when no one present) &nbsp;☐ Missed flush (no flush after use)</span></div>
+      <div class="check-row"><input type="checkbox"/><span class="check-label">Type: &nbsp;<input type="checkbox" class="arrow-cb"> Ghost flush (flushes when no one present) &nbsp;<input type="checkbox" class="arrow-cb"> Missed flush (no flush after use)</span></div>
       <div class="check-notes"><textarea placeholder="Notes on what you're observing..."></textarea></div>
     </div>
     <div class="check-item">
