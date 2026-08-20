@@ -233,7 +233,7 @@
   footer { font-size: 0.6rem; padding: 8px; }
 }
     @media print {
-      header, .tab-bar, footer, .nav-under, .btn-row, .btn-print, .cl-btn-clear, .job-header { display: none !important; }
+      header, .tab-bar, footer, .nav-under, .btn-row, .btn-print, .cl-btn-clear { display: none !important; }
       .job-field input, .job-field select, .job-field textarea { border: 1px solid #999; }
       .job-card { box-shadow: none; border: 1px solid #ccc; }
     }
@@ -368,7 +368,38 @@
     .btn-video:hover { filter: brightness(1.12); }
 
     /* END CHECKLIST STYLES */
-  </style>
+  
+/* ── CHECKLIST LAYOUT FIX (check-item flex override) ── */
+.cl-content .check-item{display:block;padding:8px 14px;border-bottom:1px dotted #ddd;}
+.cl-content .check-item:last-child{border-bottom:none;}
+.cl-content .check-row{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;}
+.cl-content .check-notes{padding:4px 0 2px 24px;}
+.cl-content .check-notes textarea{width:100%;border:none;border-bottom:1px solid #e0e0e0;padding:3px 2px;font-size:0.82rem;resize:none;background:transparent;box-sizing:border-box;color:#333;}
+.cl-content .check-notes textarea:focus{outline:none;border-bottom-color:#CC0000;}
+/* Power Type / New Construction checkboxes */
+.cb-group{display:flex;gap:16px;align-items:center;padding:4px 2px;}
+.cb-opt{display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;}
+.cb-opt input[type="checkbox"]{width:16px;height:16px;accent-color:#CC0000;cursor:pointer;flex-shrink:0;}
+/* Section N/A collapse */
+.sec-na-btn{background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.7);color:white;padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;letter-spacing:0.5px;}
+.sec-na-btn:hover{background:rgba(255,255,255,0.35);}
+.sec-na-active{background:rgba(255,255,255,0.5)!important;color:#CC0000;}
+.sec-collapsed{display:none!important;}
+/* Small screen header tightening */
+@media(max-width:480px){
+  header{padding:8px 14px;}
+  .header-logo{height:28px;}
+  .header-title{font-size:0.88rem;}
+  .header-sub{font-size:0.7rem;}
+  .job-header h2{font-size:0.95rem;}
+  .job-header{padding-bottom:10px;}
+}
+/* Print: keep job-screen, hide clutter */
+@media print{
+  #home-screen,#flow-screen,.sec-na-btn,.btn-print,.cl-btn-clear{display:none!important;}
+  #job-screen{display:block!important;}
+}
+</style>
 </head>
 <body>
 
@@ -381,7 +412,7 @@
 </header>
 
 <nav class="tab-bar" style="justify-content:flex-start;gap:0;">
-  <a href="index.html" style="padding:0 16px;height:48px;display:flex;align-items:center;font-size:0.8rem;font-weight:600;color:#666;text-decoration:none;border-right:1px solid #eee;">&#8592; Troubleshooter</a>
+  <a href="index.html?v=2" style="padding:0 16px;height:48px;display:flex;align-items:center;font-size:0.8rem;font-weight:600;color:#666;text-decoration:none;border-right:1px solid #eee;">&#8592; Troubleshooter</a>
   <span style="padding:0 16px;height:48px;display:flex;align-items:center;font-size:0.8rem;font-weight:700;color:#CC0000;">&#128203; Diagnostic Checklist</span>
 </nav>
 
@@ -426,12 +457,6 @@
         </div>
       </div>
       <div class="cl-content" style="max-width:900px;margin:0 auto;padding:16px 20px 60px;">
-
-
-  <!-- PARTS DIAGRAM -->
-  <div class="sec-head" style="margin-top:0;border-radius:8px 8px 0 0;">
-    <h2>Parts Reference Diagram</h2>
-  </div>
   <div class="parts-diagram">
     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgQAAACGCAIAAAAthwU7AAAQAElEQVR4Aexdy25aTZBu5j1mgeVIP1a8wI8BckaJlA3IbDxvAPEisv7FL+tfOPAG4w0WbCIlGlvwGGZhKydSkFnMgzBfVXX3uYJvYHMOZZ1rX6qrv67uqu6Du/5jrn+KgCKgCCgCW4/Afxj9UwQUAUVAEdh6BFQZbL0IKACFR0ArqAg8AgFVBo8ASZMoAoqAIlB0BFQZFL2FtX6KgCKgCDwCge1RBuNmqbT3bfYITHKUJMXqNdWyN02Fa4AisByB4kvOrLdfKrXGy2HY5tg1KwOSsBL9LWoDTtC83oAmYE6IVZz7vZlh0aGHB3lbkpI0UFT+xq1SKU2Ti34iCFwoWJUjTfNBrilBkj0KW8fJFRROS6WmdscQY4/Mgg4y+7YHG2YjtLtnFQ1J8vZ44WFZpSxhve0T04xIPtHMsNiSyWzupTcuFKzykUFzaebHRjJjXAIuuRfstSqDcfPDsHJ+P5/P7/cHLxboBYLy2HarDebzX1/KS5NXun/A7Hx+216ebimRaGSteWTM5cANf+PBpam0Pq2IuDFHI2Z31Ljr7EhnO6RatnejPGzIs2A7aphhfcHAF2H0hW0dobTRjyvtINMe9EZkYH1izR8lOdKIq+sgh82GMcPvrn9cD4amcvxxZf1DOsj9eSU4qfem5fbtfN6vpXHJNtHS6bJDBJN1CnZ2uasPXacymAYTx3D5y0BGKLZ0oEUzDOR0lAvZ601nvf360JjgZIctaxosmi0sifDKz5S6ARPlV2Mo436vBzOcQkVjUxZrpLv0j7MXKKOkJLJi2DoKETv3ok5lJeehtc8k7QOZ+jhZJ+GTxELNojSjaayM6Twv4UKpdEm7uJ/XBlcNc9c5RSlsqlDK6WMw4YInHQwiKIKLm4GHvVaTQlpjri9icKAJODHTxzsfAJbYa36zZe19GyM7RdlacJbYpXLw3phJMJvaLEjM5UqTNZuYyJf+679jbW08XJIyRi/XL1kdxFfWymqkgukoF8IN8a4TYGD9wBJIzdRskvxzwyXRnqGZ9r71qP+gAUQ3U5YSSY50H4SXOG+EgQWPJAPSNCwwYIZbkygwMzZbZgeJWUvj70Pz/vjTLhGU3HEQOFy4NfTM3NKDJOZXW1j0Vv6ripHjJqBa8+gRYw881y8Nus+O1HeakMxZBlZR6vbZCTYzJvwI86Bf2s+HYK9TGex+On7PwzeGTIxTQO26uXNSZWuWjNl6dAU/HUUhQeMKtm/35p+gfQvda2ie4cz24aUBqV9fgia6gdjIVw02AVASte7NZ+RFrmEnWhBay6Xv3p46m4SzPPoy/qcTSInzgbU07qpdlIZB+bITmwNFbB8n67PK30iK4777Pspb+VOrYu5u0KXN9MfFnan+ZaACJzK1Oq8MP1A3y+axclDBGPs7+kXkE8BBGXPCxFXzrnOxj4kaYRIxz4+Rkq0nmyy4nBxjhgQb6iNiiMboKOj8A6jIkuUWAQXTuLJ1H/apIUZHaOv6zb/z+Z9uRTRTBq/BzZ0x1UrZZLI3nLTA3v/+T7Stp73OpRhfD07sMsrb6KBUB8HAUZ90AQFheFmPjm7pKAoRZP4cDL5VBoDdoFG88TscUrP8amNsdQLPwgAbmVAJTm6aaNu0xMb6HRqdEj/xHJ+eSM/1zKA/ZneQiLXk5s3TyhkYw4EaxXoTaw5YEuCG7aqDCkbq+oMdZPYbRin3EGSkI8Ze+csviK55D9ifjhVRk9MJdibzd/kQ7HUqA8PzMkgbGyyQbG6VIVvQZOYLinJNR3FIo3mI+NoAAxPuieOoSQPxlOYfjc/0aKjFAx5NkZRecMMR3NIAiwc6IulrfTucUTidQecdK3VrfVBQ5lnZr5hL1CMyOr+n4ZgTewb4zbAEXw7Gxsm6KZufZHmXSjudOxPlrfzxuGKGmEbMfl4EBnUnCaPJUKm0cxKpghBeft0NTrkqpQ+YUE0C+0lZ5uDeimESNDTzAyx2SUbWGYWUA0uDTCfphBScOpkCYUI8p2JtgGBbH6LXoTWXsWcz2NtupWoor9ieNrAgt2QHIWG46+yg4TB8x+uYjqIQaand9iBr/dN2iojAxzrIAold2u+Cx3UQErChzFF8LRYUZ7y1xOM7rRHtmh80QSyVCIRYbyLNcXfxY2qcXfVQB6FOSn2ncYWB3rOSxZ5EPhErziSYeMHOZF76HSf3l80T7LUqA643rUWSIelWBhvW2sxYwV8SxaTWfrEWaObCYrRwWBNku2H5W6aW0bjUM0kwxtlrKC2WiWmvbu0mzAziqdlUHH7v/egHRlSd4ckQrCQ6Eqorkpe7TPWvcLF13GLpRC5WxpGkj3+keQBNxeZzMp0on+tFpfrwaDQgPU2hjzsdtjyxewp79LEHDJBSfEhJP46TDUuV6CBQlmg1PpIIL4l6pTq5RoQ6X1YiKTnMNclgWrhg6POztTQJxrDfWbfNvtU7dzwUYGbgU8kDaY7g4mdvEPn2JiIqgLFJKEn5aqfv8ziST2KP6Sy7OExYsJcxnySycYK9TmVw3bTWHOtbWI68eEeWbxIWY9JRHCIm7bi5ZBQgBWtE07BBHU4I0qVQCKef/KYVlXErYtpTXOZJIyBZYWZGYzQnoYy77V9pYeXY5IUluPOhE7Csh7G8FhS+0hOvFF12MGNgs46L7v8gXil20UmjNua5Z1mjM9lQYT50JBAje8qwOR/GLHuiOQ3FE8NO9B8YDij5Y844e1k5pr3mt1mt7xVSVpqchqU6CPqIYcs3XaF0FIfwNJghSmexISzwj+8gj+13ljpuLKU0+fYdhDosDCbSB4h/6CBr6a4DC6kS/20Fd+dEZtIcwUnHfWfmoh/uIAkii9l7IlYJutHXLOaj8cZwq22UYK9TGRwOurc05aXp3tGIfslzOICJR/NHTIRL9muVRSgdRSEyBesc/A2VL3IgH5BtJr7x59Ps+SDHJy+UnszMUqmzfwa6yfjke7n9b4NsnNLOTbUhkbXPBotEXK+ufBiXcH+NPxDnCLGyvtvuHhkC4R198UN49CjTShECsEaEa7n9k9bfGcSMT+7MFaDkSQAbJsgjR+1vm5FWeCSIrhXTBzGs0TVGD4/mtTP6GYakp8yGJi7SIijUfqvniCdfFrDn6RBi1EawK3c/HRDPpTrWx0kMfJr8PxwmO0j5y6j73iMc+36bjuKQIcvhTRPLRNQ6LFetxEI/CbyIChYb4wsmWRgm+11WmlhYuZ3sILUm9w8q7t92OF2N5Yq8kLWEV543wy780qWfnJVoeQehiYM0B4KsXfVQB0HKjCPJHtG8w+ocAH8iVini5aXMG7PRgr1OZYCq93n2hosbeqAJ8SYHzd1ojmwnccmoMLtd77MJaNSjGVa4mMNEQpokT7+wCsXDtE/pH4xx6Uk/+eakQFsQh9Fcck5lhekH/cFcvhhTYi6Q6pVMSfViEv4inPvi5JXzz6kWTM3mwoSDItyKkH2lIMuMJcqFcjBdhE9EeVLRjPOwXsc/KbmthQkxKX8RxJiso8aBkp5/TXh92rmzMwMo9YAssgQFZpuLttUBSziIq5AHBBhO40hTFJdFDxTrm544YZYoaRgraQpwDSWBBAkV8pVFham+EViSURBz+q0kEopMyic6vIIUAW67FYh6gUcktwuTImytbFNgJIvjihig7HJSgmhI2PSevu8gjoLwkFWc0LRXJhVKqbyCWToSvNmyhHlkjwqSD0S4oAEo6FnOkI04exYEO2JQNalcnFS00BHKHMWBQlAyRjFBeJL5SAsi1tiiiSDzg2LCilOCNzzXqwzesGJa9OoRODzzdismHI3HGH2rZ0IpKgIbgkDR2FBlULQWXVSfhIWyKNnScG/LkD0TM5GWZtNIRUAR2HwEVBlsfhsph4qAIqAIrB0BVQZrh1gLyB0CyrAisIUIqDLYwkbXKisCioAikERAlUESEX1XBBQBRWALEdgyZbCFLaxVVgQUAUXgEQioMngESJpEEVAEFIGiI6DKoOgtrPVTBLYMAa3u8xDIvzKY8v7jrdi/4PM+73s93oNzRr6iwu0T/CsFleyeCmGg0BGakgLX/d4M6PKG73iTLdERgIMLojC7CxOC3JGkifCQLO+JFL4SBUs2DOQ0yEXHrLcf3Rqegl7vRMUFlucViewxtw1EBbg1ZVdzetNzAQLTNcg2FwX8Weas/BspCEEi6pwGF04WlUOE0aGyTSjgXINsA9v0YIKiIse4mdjLJxL3ksf8KwPU/n2lQntE44mPaa8zaTTe8/N1c6d/TBvEz0dV8nZk+H+v6H+m5vP77nveDoW2ERUvC/fdCW8iH/kf9/vzCu8pNOt9P2A6IMRuZNgHSN3YPVj9VhNcKu1CVT+J0zSz3sdOldwzzO/PJ+ROILOURBohN/1xYRqNSdxTgkRt/pX+iZ+3qdh8VjeQw5XLdobcjpvvLsiDxZxkO/Qyct2sQ+rSmKT7i8p2GqU1htCOFxn/8gnN9BKjzZhCKANz3D2feA82s58XptU84MaY/Z7wUI6XWvNI9uzEMx80wh5/2jWU/lx2rKNNQ2VDU06By+xH3xyTH75yu9/mLbdmwaTCvgsoqrtg67QMmlRcVzYWLX88rsTcAxCpY5SyIA1Ra52dtczFT5qigK2VHmRowCi0UxN07H16w5ky3l1Kt3E3LEfxNxdNDNMGr3SIaMLqdPYm0lN4qTl4XgW2MdfKZZuELSa302Bi930ztc8N3nIKQI+bH8yo38RT4iBpTPSXBXLLGam4rZZtjNEs9FiGkLUK9ILFvWbv9JZh8xd0n9YYWZiGzNJmvX1Z9sADB2PmjVI+DHk7wkSU2w8UCVpNTCkog3RMX4R7KIYyMJWPx4b2TUO1IHzV7pcKnnCU/6o64Ta05S+C3DH+p1PN2l2Hd6t2ia5PO1W3LynQJCB3Lloj3gIvuLkLrK+PkkPc5UvcYzQlTjyayXO0FAmRq02DGpFCggpxdZTo1Vxn3zqG5yuyEd64hQryFOhPdxL3rTZudQ7+8KTqz/HFR146M2Y44QnTVWP4lUOu/VTMTbM8m7A0rRuvg8mlD9WHBxBYtWyn5Ha3UvX7ZoudQ7MHSMWj5nMq29R+S2SbZsbca66q7C6Qkid7TTjZ6prLlBury/qAnDbOR0dRx4jGXJ9ekGdAEB/UUMpVw5D/Bto4L7sXX064/44aMf9xxI+cBVEGtLuyIRdIAKhTZQ9oUr/Ds67p7NAgntgRdzy4lG2iJZ29QnnYJ76Nvw8b4kMNr4AbsM/n3dsdt6jHLjgQaIdCZzjv9/4P6d2RoEnB6H50s2esFBtmjE9DZhfNYMI6+jSreAB7ww9emWHe0+h+4SnQbrt7FHU+gSin/N51AquojN2u7rDZ4BBMxWyIKbf/bcg2+sJmGLULyhKm10cgsPvpeMWynZDb2tm5sWYNWhYcYWzqH8ssFm98qGybUICfJtvOfoflzlDiYvuI6zUmuDF2soW2sIYsktnjvV1RJYwX1wAAEABJREFUqGHeRn4jbLCpHJgTPxa5QLqjq2b14iOxa2mNhP1gUNLouSHKIMrS856xwmOwipIaWMO91UZHxvsCm33rTCz6seLQ3uEEYopvD7YZoomSTYI426i0lgfVABP7PxHojhhNCaSJOS814XVBKcalwaw8uBN9ttO5i690IfvLD1Zyze/iLwFm4yKKiHKDCFUy22zMsBMdvSVRLoneMxFYg2xLOVZuIx/SYF1WK+XgxolcfUju/LA6obJtlgjwkqjZt7q134GtwJ66YohIhT0igD86jsh1BBoomh5dNfr62OfCKANDqygnO/VJxvBNYGAeF04FxqcntPBC4UYyno7pJRaOdSTT+sRGMuLIOxJuOMbfh6wwKgfvreE8+9YZOi+VSICDmYnTJPvOfnmOUo4+s+2fSENrRF1ZnMEQfOWXdFHIKo9a/75rYC7AanBTUWipEDGUFYnC24IDmtKuF+Hbw9fIvMrQerSdKBDlBfk1OAsBFqdVyfYSucV3Am4ytg8gbvii3DCwAGKKn5lR2WagXGOR2H/nIWSxbC8Z8QlSu8qNISi1THTnxgQ78rhS+V7+8mt0JB4h+Z0uka5K/GQsgVCq1FkcZWB48cF9LnYVnfb2eI2ohK9hcyfT14Oh+2JG6Xbbo/MJeYwq1Sfn8j0AwVhH4t8a4ZEO6x0JxKBvRrSQQl6WJh8QgAWoatJxWAbNML2jALqJUlJp/BoR0uIgU45Xw/C8osN9m8KngrMahuz+qHrC62rvOtUrhxiXVfNRqHSLRZ/DY5fDwajq5jHVuJ9kLNkJzB/N8VEsk748gMAqZTuUsZ0TkdsZ/XAZbVqq4+tRxs9UEsw9W7Z/4isUFzPpUg/aDtmmgZ471E7fpBaAHLJoX9trBgfnqVTvG+ZrBDeXyf9So254/QeDwyWGMfqAHHbVVC92uTPu+VcGmCuR2yCqW60/dz/xxOoQfUiBhvjFFo7z7UXJyFmSy8Lv4TTZZUcw5sVMAY98gLil5POiaBsUGzQ5eRZNn95TIF9jsVJChiUNssiDEE2nt+HPv/l6ubqj4q5Wh0wWdqL1GBVGkYM20hziygrJEGVB8AQlDdXIVgGNwpRv2+2+z4i8eixAINL6QNU1EGBkmUEsw/lk2U5mBEFHSFo8ZCds1jAMk2nyi0dZHEuGWpkC2COeTYq8zKd9TaUBG1YwJEUqvQS/4ArQhCnHJ4qQACd+ryDbqKaUefvrF/cjcOU0LvhJ9JpB+8svx62v+cHZLZOwcKG9CFjMCTiUvSVSWlBDAEWhaw7wyIctK6wpeVuzgZQrPPOvDMK66JMioAgoAorAMxFQZfBM4DRbBAF9VAQUgfUggImFnRCsh36EakwZ0LpUTs5IFfRREXgOAhsr6c+pjOZRBF6MQEwZ8BJTPi4vrrgS2HYENlbQt71htP5vhEBMGaR50BBFQBFQBBSBbUBAlcE2tLLWURFQBBSBBxBQZfAAQBqtCBQdAa2fIkAIqDIgFPRUBBQBRWDLEVBlsOUCoNVXBBQBRYAQyL8ymPKGE/HdEXiLBfq3bFTR/9P23jdyBuBf5ZeFyUChIzQlBa6yHb/dwlo2dANhY3yI29+fQ+0lLEhoIjgkyxtLha8ow5ENAzkNctExow0DPB0KedT51ETAjXwYUL2ipS8lg8TrZ2wpB8WNnK5Bth1aaOtSybYyP7MQekmWohEmwu9yyT2Psg3OUU0Sbzy9/FiL2M/QzWVEejmDz6CQf2WASq/cG9Ru221iMV/s6WzW+zqxW8hFdioHO3RMezn2dHY4iO1wQPXR840QWLlsSz2umwkvZg3xaTGXzQwW+D6TvLmWbanChl7L7Vu/oU6UxXHTqe1o6MqfC6EM3sbTWawteB/TMGT288JtUF7+1KqQ9zTalsvuqFreLE9nBhYTTEDYidYB2bS3J/YgzB+OKDmDcdza612zuYognmlxnQNYNJRQpgiUvdncR0BzjGfc+XBGGSSb3+lCszeUHnH8NIuRYurbfVm5pzPAOV7kxQxxdND26exCw9Bes949FEWZLM+AmyvbTthEnqUCdHXhIthTJ/BmBvGzggrhF3mm9HRCUElmY5KPcMoi4TajccRtoe5VykIOeyBjc4xSOLPkRRHy4OdezWtkl43ErcNqH1US9qZgXrqbW12w9J98K4YyeBNPZ+X2z+OLd9yS35upvaViLZGx3Tm7grGJ3tTTGRa76osckNEUgf83K5z6BJ2vZoSwP11zIvsYG3N5YX4iKOJB6W5o/kXIoObnWH+6E3aFNiNPEuRJjaZcbo/Y0PHTh50byhghZTHa3tuqPZ0ZNIGJ70cLcIe8/25Jxq/dDN9nSJN5bLJsc00hh9Ht81AJjMJ1IzMhCPbH3oy2l5fNgIMbU5nwZtSz35OGd2yFTJhLSTeZx4z3tE+xRKGZ/gFBj49h/XuT+LPesTiMLuPT/jF1EszQD2uD+Yg3EudyMz0J2u523zWd02vK/7yzIMqAPQFwc9LA+lqezoKbwDRGVw1zWWd9Dh3OuiFXns5I6MX9527aARm6Ddco7aQJ/ee920U97UHJ+WaCUMLYIRLiQgvvWYd1/FQ5qNiMlYP3Wem2MwxQm9XJNhZ5kl7MaBtLGpLmc9p+nOzN2lnC91nE2s2tFz8vPRjx7RzdHJ51CVtM383Fz5m5Hkxa3WMTzAz5EXH+pyhj2E3ozZ8ZPsVSrgOD0Itc1AQkGhXrjPrQOgqkMDorB6azs89+ZOk1PCNslNvek6DtNahFhRYhwuRPeyqKMjAAgppzHHVUSVDQMpwV9NV6Opv29sRHAsxna/ZCh3NRt+0ceTrLsOwINzof46SJ0i05YU8ZmkjM/3Rlm3Z0lUC2dz+pWv+aS7Jvd5Sr/UplGxbMnTickMUH+w1Zyqp9bshDuD0ybJ1qpUx7p+dPtmmz+vm8ab34Sc0M+RB0j/5OYnkbzH6b44+1irn4cf3jwtiFMkmzoJtk+RTDgBAWigQN7gCMnnepIkQXXnnU+sk+zOKW/gI2FhJ6UkRhlIE4LNvBisdZck92BgSjUui3a3y6Ak9nTFYu6GDy4K74KuBWUVxZZN/ZSVzUu1n0mec3iTRkoXTX6ekM/f9BB2SwR1zNjHVkhmXiu2pl1wc/9OAgGn93X90f2zEeorwF8SxOK5JtHqp4ZJLFB7ufvqAIWyr+9QtfF2IuvZCMmTkd48lsumwTj/jsYb34yZsxkZ5osJAggz5s88tOvW8qu6ayb26+30S8HFJG6ia8zkkv4bnQp1jNFhpJEObyT0HnnzG9kLut6DyEwshFxFUjYelH2Jj14p4EOc+LLsVRBsCue2Rez9NZ6O+pVPow6f5sOweZ3B5hrPeehm8McU9PlHA8uIz6U0ulwZgrwkqJjYHI3vGKgbyu5IqZ8gIHZNztyetZ1ElTo3pDQY/0oASGyftSqfR1IjMD9DQ7a8biUYt7wkpqUWwiu7SCtzrZjoOFOS7ago+6GfHXrxm+o9qAK+cHxmfKj2zbJcqS9eLnahD2skjPxagdBIZGZIj95HJy/DHWoTHJoDU0BmUv/OkEVtiSngEThYZOx5A3KfCVhukgOMIG8zi1v9EofTA8ewZvQ/JhhnKXeBLkrC+55F8Z4BOl2++79rqezsKp9Fx+kBdrCB/LvYujwCqbZHPHMKyWQSJvIg1ew8QggpWojLIQ8YKD56RgzDsg84XiAeE4nJMmKuXzAAE4rLMkWJrsvwlRwJ8CkSvkGQwjLb7g/fpFgdGJDr4SD6ANbC7kDzOCpZVXEwXk7QgBwaDD3w+pBg4cxDK0+MpYo3A+0RyEMz/zJUMOOZxlj6cFIR3vMwtFONJZ8+wMmp5IWDqaPt6IiTR4DRODp1R6hL3sgGhJNaQP4pXkEzRRtEREeh9i58IPxcY5Rxbg1Xd5vpShG6wjP7+AhmZgrIgOJ5RCkc92GAS6nsL06HLwt/yI3RaHvMQhMYDUOLiBQIKLFoJIgwg6hBoSC9vsgU7SEOmnn/lXBk+vs+Z4OwTK7X+rbmaAOdNZOIq9HU9asiKgCAABVQYAQY/HIgCrhCyXxybPSgfTlawaOl9ixWSR1jBFYIMQeIgVTL/shOChlK8UH1MGtHqVk/OV4NFiiovAxkp6cSHXmm00AjFlQNZaTs6NBlWZywMCGyvpeQBPeSwgAjFlUMD6aZUUgZUjoAQVgSIioMqgiK2qdVIEFAFF4IkIqDJ4ImCaXBFQBBSBIiKgyiDaqvqsCCgCisCWIqDKYEsbXqutCCgCikAUgfwrA/nX7fj/efN/hNNe+aiq3/5b/oncv8ovC5OBQkdoSgpcZftAt/O43eYXpH1IcqdyxJmwIKGJsJCs2x3MU5AiMtMgkLdZt9uX02v+TrQIb+y6Fs4Jag+gLWH8Ov5AbGlruonAePnhUoBkyckbVRzyifdvK/Li5yhzUeLowsmqBPHVlxvKpLBKzLj0GyvbXIUVXtAixZDt/CsDtOrKvUHtZnk6k338537T8NlLPZ1hiE/T/Nip8k7r9+eTuh8FaIeiRmPS6U1RWz2SCNDuCO4/8pNxeX9/Jdl2uwdeVe3WacDtupnwhoYwOqa9h734qWwTUis4X1O2C6EMXsfT2a3sE1KuVE1iK0G0eXyvR/M4T2fldoImDfp2p/VyxBsaUWudnbUMbbmOwlZ7wIJrNZtk05Vg6DmjT+y7mduwjKKo2GnardKst28nYWaKWN6EHTSFYNzSJArudAVZyhHzauYIji1XjgilaVEY5nPRZ4PirOJ0WVrWaRtKQ0rhBbnwmrdjHZ7OBAPaJyq5HZsxTpLHi7yhkTSeyz4i5cVe/FS2WehYLCGBbuqw0bJdDGXwKp7OpAeZWTCRfUbLK/N0FtK0ZdibdYVhOy3Ug+n/oOUAG7262+XkgHbJHjUu6zu33fl8PjoadmjlAV0abzjuu35e8hi3Sn7PiailGeU35bCJ9uZlD1OGNCJtJZ/pIkp8osk+FtFnpo1ljfrknDxE3e9PhhJ03ezsU8h8fn/cr+dxarVyT2cCDO3eXO22aRPyDEmefeukvaHZjPFbxg77Vm4lne8v8uquNo3K9vHFR7afjInKc/RZIBu31i7bBVEGhvYo572dr0871fV4OuM2YX8vI+5CxtAe/SvwdBajyaXQZRczELr7wTGsIwev8mJdlVUO3lvXS848NGR0k4mz07lzBT7KrRIsIMpWirhIc/npPvs9sd7NTLn9b4McKtBm17SJKRmerU9lUpCB3dLuXSewY4dxuYhI9JneKUuDt/w15S9d8dKCggL2pVMqoQrUYJwyV5dXkG0CJiLJWAhKekNzU64nevFT2c6RbBdFGRjMWGkVZbxWT2dsz46+8Ebn0xV5OovSjI5R02DynnZXx+AY3IlrKhrO1rJSFC039sxrBZgY4EvJU/xQ8hDA9viVjMkxonjJMCcNbdo+uLamImnau6e6iApuvMZCGXygoAZ/g6FKuE2GOSZHlx/DGnQAABAASURBVDXLdlqSoRusyHlvaDW7D/OTvPipbFspy4ds50MZWEiX3sofj83Jzto8nfGvg74e3Gd+qETnifPGzDzsDYrWzaM0dz8dm9f2dBZnfNFbxjjrkuIjiq3/+J9O4ELlDsNcHhLX2ueG9ZhGXxqHjc+0lTUH1p27Qeo/vFSVyLrklbIM2E3g7FtHlomYpp2GL8m54VEsTmuU7bD60pJ+lW+e4Q2NmVHZNsWT7eIogzV7OhufngTGmksl+nVp6O/p2Z7OUjSxZvIz7g3NLaDb7oq1lJV7OrOkM280vNZpvaczWTwzqP1tee6Yhrgz4/GC/KHt9I2EJKlnOmyi2gXe3eBSF1FJevLuOambYzslCQtCNeSruKTN1XV3tZ7O4v71lktyGqcwPVaxZckUXx2sDMAa46mzyjbkbadTHdkt3/Mg2/lXBrttdqFFMltbo6czN02W5QaeH9CvvuR1nrEvuY+Vr53EH1iV9JzdRHwkUbAEJtLgVcIpP06wkVEWIp5/wAwUl0lQRbeWOJgXtgEp8Tb/9UuiIvz4NFDD1l1Tf2DbAsk429y5SAMd2yscowiRJM5jFCJQO+/Py75G0yCLJxJ9Dt1OuXJ/fWkPnI9lpLREXAhI5+NAdVzroxbSIsY3E2JtxeR3blwntKbLwu/4fCKNkwDWNnQizTwpyWiRCHFJDQ6+pGh6ZmzpyGiZo5sEJtLgVcItWWSJcWWDX3IDGirbjwYw/8rg0VXVhIqAIqAIKAKLEFBlsAgZDVcEFAFFYIsQiCkDrHLl5diiJsp/VTezBhsr6psJl3JVeARiyoBW93JyFr5htILrRmBjJX3dFVf6ikAmAjFlkJlCAxUBRUARUAQKj8DLlEHh4dEKKgKKgCKwHQioMtiOdtZaKgKKgCKwFAFVBkvh0UhFYOsRUAC2BAFVBlvS0FpNRUARUASWIZB/ZTDt7ZVKpdY4WstxC0F2k33a/wdvK/QGFXeqxWVl7HPgyw15E1aJGU4fvlIQbXGBOoSBnMbwnkgcj4vbFd1tIek2+jcmHQJaktfSoXc984WACMNqZZsRYKGFQJX2aKNyY67JSwS9e4nyIXFp59wiV5zc8yasUhjLW/hKQVa2kZnI2o6JN3KAwfGlEudCUCTjYmlHOuHB5aIAPV+KQP6VARB4HW9Q3w94H875qGr3kkPJ6EXP9wa1m+VPLcvTWYX36J+7TTf9zubzq2qHN0NPhxBvhnYAbRxNFm73xon0stEIrFy22byomxHECQdvcZH22YcQSeH9+kVAmvYe9nSWIduGNND3g25kk6vxPxfH5EjD+88w43+sp7/5n+7kK+0wqLIdgX69j4VQBq/j6azf5q2ryVkHbS1N7cI7PPeb9Bg/Zz8vzMPeoHweGrWPP5bZdUGGpzOfjh/Gg0u7a7+h3a9uApMO4YS8yd3Z38cPucQZW7PQ2oDu1RqJs97+XrNFsy9MrnrW76ZLk52FLU3xnmYTMD96eQ4Cx93zUJ2TXLWaB0xn9ntSIccPeKk1j4LY3ubc9J92DaVPyKEhYev+TdvEImf6qOxXDG1/JFsSlSspv34ZNKm4RXJLxZFsG1Prz+f9T9ESa327GREKDW4TO94aU62UVbajeK35uRjK4FU8ndEMF3PanYuW7NSIieqKvEGRQx7xORVvbefRJbDuWTInxZPADtA+rw2hTovBgrbFZrc/Pj7+MCOfVrAR53PeNSzLv1gwNOT+7P7ciIPceBZoi7oRnwFupkIliPc0pkmvej4XgVV7Ogtu7gLrNQirM7Tjd3mxzz4yfWQoX8R+xiDu5JayLJJtigtPEGnINub9kfmAXlYqfTQju8dcmMwYle0oGo96fnyigiiD0AsYCd96PJ0dWvce3dsdWmnFZHlF3qDGSYc83HzO01nZ7RB5fz6pJw3tykFk0s3ZfIi3yKxrFI7NuJT/qg4/lNz6LDq/GylC/2LW/Vn543FlEsxgN8ayBDfGWoXm8KxrnOKx3tMyStSgpyHg1fnKZNt5DbpyXiXIjUHE05njj50UiekTzgX/z8XiDuHBNXY4uZXAbNmWOH+9bmLZyu5HOw0mptK96lbuOnX5nuGTGZXtEIt1PBVFGRg75KWEr9y+ZbN3jnVJU/2LV3po2bQzsdPnGKo09aZpMgdOe52JG+Y4QC61zw0YMuTz8k4ckL3MG9SCUgx6BXs6k0JxpbEYt9gBK69aITe2PtSFYObuDMCdkyDo/8Ag7hPFHljJNb+zkwbU6jH+xaJZwGeMnL6sHIE1yLbwKMuM07TPPo6+bu70j9k5AV5r1hR6kqezRbINev6Q0u0kYNx8h68Iv9qH+Jw2qp6ICx2fVGXbQ7GWh8IoA4Oxcp2ezsZN98MJ6BsscdIe+k7LNAxMLVljtY3EzIgoj09PDE20yb7rnNKsnL6SeRcu+GLmn82CNEIUyz4BraJigXgo34Rn3zrDI0yD0iEGiY377Aw92HjIJU6tj0+F+PwQkpJCl1xtlgjP5GPdHGOpekkujXoGAixOO/VJ3DTxhGBZXzaah/I+tvLGb5zxlH9p58NhXw9Df3AkP5xULjRFoCf6LdzXbL9+GTR30x76iEhMtikgdWLp9d1NN9PPhDUyQoF00q6ynYJxRQHFUQZmrd6gTK1p2OVXqYQ+6cylxY2w2x5hVaeEvyXeoJAd334rpCrwSAdWb5Meo+zX3VIJZto9G1DeBdjOSVXWVVMhfo2IiOLTXfIDowTzlX7jATZLOxetM3xV9KQozOk/Thhe4llCnksfJt2fbTv5CpPr04sRWKVsh+1l5SeUVe+zD5oj7tcvWoMw/ZNkm39NVNrpyIR1vzdjj6fGDG2/ol+X1gb47PSORK/0rlO9IgPLC6Tl1qhsRxtjlc/5Vwa7r+PpjH8LIVOB5EdRzKBJahPN4tf6+dd7HAlWkxSQ1/6gglMYqDTrRMqWggSSx37g5WQ+0JebCMHiWIxsLfQBxwQiF0RJAY5PT2rOPsgipMA/c5XMgnAhMXeFYh2J9VakHH18OgIAlgFHTmDuGsi1CGIt7F4MDE1YXRbkwrFMDp1J7tM4T2cRGUARcYIP0AwTg4iTB+SBSdIHLXdQMlTEvdKdawHJoWc67VeE0CEgJ6BfOiXJOmS4mMgFoBEh1OqLmChgSQJUtiMwucf8KwNXkwLdtSqKgCKgCLw2AqoMXhtxLU8RUAQUgQ1EIKYMeK0uH5cNhFJZyhcCGyvo+YJRuX0mApuXLaYM3HJaDu6bh6RylDMENlbKc4ajslsUBGLKoCiV0nooAoqAIqAIPA0BVQZPw0tTKwIPIaDxikAuEVBlkMtmU6YVAUVAEVgtAqoMVounUlMEFAFFIJcIqDJ4QrNpUkVAEVAEiopA/pXBtEd77cc3TuD9EqxDJdplhX9FuMebIPpXDrOensJAoSM0JQWu9K/zvEc/nnHIq5MILitjc+kkTaQPyXL68BVEZZ84JJKCLPP0HibjXAgKQ/xuo25TSeuEAInoYB5cLgrQM1cISEOLTDrGWd6seHD7kvA8QbaZDhMJM5prv+mJpRyGxKWdcxtfrnrxE0CKcc2/MkA7rNwbVPiP/vP780ql9alsZr3X8HTG+7eoNyi0qR6CwMplm7bs3aub1/d0Nuvlw4uf4L6N10Iog8J4OpP9W9Qb1Db2xEV1Loqns+mPC+f3ouwcY6TqPFYvfilMXi+gGMqgoJ7O4mIQ3AYN9QYVx2Qb3orp6cx5QwvUi9/GCHFBlAF7AmAfWyvzBkVNNI76IHP7Kb6SpzMqP3JeNzG1t/s40lbv6g0qAs7jHvOairwFrFa2G3aR6K08nTlvaH63VPXitwnCWRRlUDxPZ1HpwIfED0ZcFxij3qCi0GzDc+E8ncGaUS9+mye5hVEGhfB0likf182SeoPKRGZrArHIvjovfm/k6YzmNxme/qQNZz8v1IufQPGG10IoA8Fvld6gQBHfsqI+yF7H0xn/mki9QQF+PaIIrFK238rTWViu8xXofw+tXvyijf1mz/lXBruF8nTmfTPRnprqDerN+sVmFLwm2QZZEi+c4jvM+LX7+VyciEU8giEVyWEMEJ8+dDHmaYaJQUSoubzJNEgA6nzEcnGI88Jm1NOZw2/d9/wrg3UjpPQVAUVgAxBQFtaNgCqDdSOs9BUBRUARyAECMWVA/5+ekzMH0CqLm43Axkr6ZsOm3BUWgZgykLW6XFwL2yBbWLE3qvLGyvkb4aHFbjsCMWWw7WBo/RUBRUAR2FYEVBlsa8trvRUBRUARiCCwVmUQKUcfFQFFQBFQBDYYAVUGG9w4ypoioAgoAq+FgCqD10Jay1EEComAVqooCKgyKEpLaj0KigC7FYu5q/N+yprXvs6z3n4p9Dtm+JV/POvT+Fwl57yMKXMi50zNh4jrNE9dHjwFH+vTS9HhK1OVZGGgK4WoXTdLca98FPiGJ/ETA/kNeXmrolUZvBXyWq4i8BgEZj/6pnE06bDTVmTA2Fo3vAX1n+7kA49f095eqW5aDcTa4/r0onVPv531m1RPe51Jl4PmoypvGDft1U+qTOi+O6mTzrhu7vSPOc2oelLvTS0xe7tu1i0FF5ui4LepmM/vu+95a69UGqFGm8MfVTv/jOX17a+0Qb3dnOPtmXkjDlQZvBHwOShWWdwABMhB2PHZ38em/2PG7HgfR+TD4/1wgMkB7fnzq/0XR8vlcGB3DaocVJwbGYnhK0LN7OeFOT+r0Xv5U6sy+T2b/Z5UWp/KFFJrHgUXP6VAesdJw/e/bR97E2RQQDJ7MNufdhelGQ8uG81+s3E5WLc2gO7kWUp02mR5NJgNtJqYodBUCQpVJkw+ENnsVGZGsy688kFa0xEo2F2VQcEaVKtTKARoyMYATfs/X/xgU72yXxl+lyG0XKk+VNngJjhq0oi/2x61LnZ4OBt8ju8fxzSgY8p/VQOnclAKBy+8QHkk4kDBh4z/6VSt5vBh9GDTXA+GxBVUDiszilnPGc513OwnUc7l5ODPfB5uk8fREjgfNS47ND0if1k8g7pqmKORdTDFCQt2UWVQsAbV6hQJAVojOv4IcxzGuxFTvfyl27is86heql8ur+y4GfpEMjQQH41GR2Yoi0uRrFAD9HZ41jUdURg7JwFCvFmdMIfTqsJSQB462PA/pKfo6dPQJEMcuH5uOMUWTbiyZ8x1GlYnldv/UlnJGh1127up4mwgdBV0aSq2YAGR6qgyiIChj4rARiGAxZa7oPOORn6Mzs5s9zs/07r8QWURx1jcqJsruw6OQZC+NPRrtf78/jz8AiGZMWjy+F5u39KHBpzQGdW/yv4bQMIchl5BrOSVq6NAb7NvnYldgKJXf7o0UBVQSFSp0oehWedKEfj0pcvDohpJbPYVi2qifT9Mun/TLCs7Wf5DVRnkvw21BgVFgNaIzvmDLoZnrFrc2ZUiqe7sW71jjrEuL6/x67hZ2rn5d54YxCWNDJHsPe10TEHj0xPD8w+vgrqsAAACIklEQVR6oRPfirGmHzfta7Div/boMwK+RXPsAgoxahlpaI2IV12oUtBna1wpCnk2s97XYYOnI1TBp5xoheoV8eqcPTwlc67SqjLIVXMps1uEgF8jkjrTqgWtFOELJ1vV9MsfWeye9vYQQlY2LR9hSQe2+dA467tUQkj5y6g7oVgkrE+6oy9lg68I5xJUn5yPaLVE6CAFFpdC3zJSujGHg1GVF5Hedaoy4UhTQFqM9e8jKiqVZvw9Oihj+auyxpUiz3Npp1N95nI/VreGHwAKH/KRGdUs4qHKoIitqnUqAgJYtIl96cUKD/1GiH4EyYaqaALUlH5NxCF8wWzAL4ZwgMwPQE3ewu+lPhmRjdGxi0sIix5gQEigCAlPUkAo2POM4dWEbtSkFBDx2RFPFPprXHtBccLzPF0KWPWBwFDYjgQiL1gl7WVnBvddE5ucgf8iHaoMitSaWhdFQBFYMQK1v7sTOzPA9CLrg/OKC3wzcqoM3gz6ZxesGRUBReD1EMCkwU4u5hnTi9fjY+0lqTJYO8RawGYiwGvAm3jZTLiUq8IjoMqg8E2sFcxGwFt7m/aQza6GbhcCb1BbVQZvALoWqQgoAorApiGgymDTWkT5UQQUAUXgDRBQZfAGoGuR24yA1l0R2EwEVBlsZrsoV4qAIqAIvCoCqgxeFW4tTBFQBBSBzURAlcHq2kUpKQKKgCKQWwRUGeS26ZRxRUARUARWh8D/AwAA//8zXh0AAAAABklEQVQDAEgycqOd+8NkAAAAAElFTkSuQmCC" alt="Selectronic Parts Diagram"/>
   </div>
@@ -444,12 +469,12 @@
     <div class="info-field"><label>Jobsite Name / Address</label><textarea rows="1" placeholder="Enter address..."></textarea></div>
     <div class="info-field"><label>Contact Name &amp; Phone #</label><textarea rows="1" placeholder="Name and number..."></textarea></div>
     <div class="info-field"><label>Model Number &amp; GPF Rating</label><textarea rows="1" placeholder="Model # and GPF..."></textarea></div>
-    <div class="info-field"><label>Power Type</label><textarea rows="1" placeholder="☐ Battery   ☐ Hardwire"></textarea></div>
+    <div class="info-field"><label>Power Type</label><div class="cb-group"><label class="cb-opt"><input type="checkbox"> Battery</label><label class="cb-opt"><input type="checkbox"> Hardwire</label></div></div>
     <div class="info-field"><label>Installation Date</label><textarea rows="1" placeholder="Date installed..."></textarea></div>
     <div class="info-field"><label>PSI at Valve / Building</label><textarea rows="1" placeholder="PSI reading..."></textarea></div>
     <div class="info-field"><label>Total # Toilets &nbsp;&nbsp; # with Issues</label><textarea rows="1" placeholder="e.g.  32 total / 4 with issues"></textarea></div>
     <div class="info-field"><label>Total # Urinals &nbsp;&nbsp; # with Issues</label><textarea rows="1" placeholder="e.g.  18 total / 1 with issue"></textarea></div>
-    <div class="info-field"><label>New Construction?</label><textarea rows="1" placeholder="☐ Yes   ☐ No"></textarea></div>
+    <div class="info-field"><label>New Construction?</label><div class="cb-group"><label class="cb-opt"><input type="checkbox"> Yes</label><label class="cb-opt"><input type="checkbox"> No</label></div></div>
     <div class="info-field"><label>Technician Name</label><textarea rows="1" placeholder="Technician name..."></textarea></div>
     <div class="info-field info-notes" style="grid-column:1/-1;"><label>Notes / Additional Details</label><textarea rows="3" placeholder="Any additional context, site conditions, or observations..."></textarea></div>
   </div>
@@ -458,8 +483,11 @@
   <!-- SECTION 1 — DOES NOT FUNCTION                  -->
   <!-- ═══════════════════════════════════════════════ -->
   <div class="sec-head">
-    <h2>Unit Does Not Function &nbsp;(No Flush)</h2>
-    <div class="sec-sub">Start here if valve does not flush at all — sensor OR manual</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+      <div><h2>Unit Does Not Function &nbsp;(No Flush)</h2>
+      <div class="sec-sub">Start here if valve does not flush at all — sensor OR manual</div></div>
+      <button class="sec-na-btn" onclick="toggleSection(this)">N/A</button>
+    </div>
   </div>
   <div class="check-wrap">
 
@@ -516,29 +544,17 @@
     </div>
     <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
     <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
-
-    <div class="parts-section">
-      <div class="parts-label">Parts Required</div>
-      <table class="parts-table">
-        <thead><tr><th>Part Number</th><th>Description</th><th style="width:80px">Qty</th></tr></thead>
-        <tbody>
-          <tr><td class="part-num">M970694-0070A</td><td>Solenoid &amp; Piston Assembly</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">M970784-0020A</td><td>Manual Override Button</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PK01-HAC</td><td>Power Supply (HAC)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PK01-PAC</td><td>Power Supply (PAC)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PRX M950361-0070A</td><td>Battery (PRX units)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">A923654-0070A</td><td>Battery (STD units)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════ -->
   <!-- SECTION 2 — ONLY FLUSHES MANUALLY              -->
   <!-- ═══════════════════════════════════════════════ -->
   <div class="sec-head">
-    <h2>Only Flushes Manually</h2>
-    <div class="sec-sub">Sensor does not trigger flush but manual override works</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+      <div><h2>Only Flushes Manually</h2>
+      <div class="sec-sub">Sensor does not trigger flush but manual override works</div></div>
+      <button class="sec-na-btn" onclick="toggleSection(this)">N/A</button>
+    </div>
   </div>
   <div class="check-wrap">
 
@@ -583,28 +599,16 @@
     </div>
     <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
     <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
-
-    <div class="parts-section">
-      <div class="parts-label">Parts Required</div>
-      <table class="parts-table">
-        <thead><tr><th>Part Number</th><th>Description</th><th style="width:80px">Qty</th></tr></thead>
-        <tbody>
-          <tr><td class="part-num">M970694-0070A</td><td>Solenoid &amp; Piston Assembly</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">M970784-0020A</td><td>Manual Override Button</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PK01-HAC</td><td>Power Supply (HAC)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PK01-PAC</td><td>Power Supply (PAC)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PRX M950361-0070A</td><td>Battery (PRX units)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">A923654-0070A</td><td>Battery (STD units)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════ -->
   <!-- SECTION 3 — CONTINUOUSLY FLUSHING              -->
   <!-- ═══════════════════════════════════════════════ -->
   <div class="sec-head">
-    <h2>Continuously Flushing &nbsp;/ &nbsp;Running</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <h2>Continuously Flushing &nbsp;/ &nbsp;Running</h2>
+      <button class="sec-na-btn" onclick="toggleSection(this)">N/A</button>
+    </div>
   </div>
   <div class="check-wrap">
 
@@ -650,28 +654,16 @@
     </div>
     <div class="arrow-row good">→ ☐ Yes → Inspect piston &amp; o-ring. Replace Solenoid &amp; Piston Assembly &nbsp;M970694-0070A</div>
     <div class="arrow-row warn">→ ☐ No &nbsp;→ Replace Manual Override Button &nbsp;M970784-0020A</div>
-
-    <div class="parts-section">
-      <div class="parts-label">Parts Required</div>
-      <table class="parts-table">
-        <thead><tr><th>Part Number</th><th>Description</th><th style="width:80px">Qty</th></tr></thead>
-        <tbody>
-          <tr><td class="part-num">M970694-0070A</td><td>Solenoid &amp; Piston Assembly</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">M970784-0020A</td><td>Manual Override Button</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PK01-HAC</td><td>Power Supply (HAC)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PK01-PAC</td><td>Power Supply (PAC)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">PRX M950361-0070A</td><td>Battery (PRX units)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">A923654-0070A</td><td>Battery (STD units)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════ -->
   <!-- SECTION 4 — WATER HAMMER                       -->
   <!-- ═══════════════════════════════════════════════ -->
   <div class="sec-head">
-    <h2>Water Hammer</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <h2>Water Hammer</h2>
+      <button class="sec-na-btn" onclick="toggleSection(this)">N/A</button>
+    </div>
   </div>
   <div class="check-wrap">
     <div class="check-item">
@@ -711,23 +703,17 @@
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
     <div class="arrow-row">→ If YES → pressure surge confirmed. Install Pressure Reducing Valve (PRV) + hammer arrestor per IDAM instructions</div>
-    <div class="arrow-row warn">→ If arrestor installed but hammer persists → Replace piston with slow-close version &nbsp;M570619-0070A</div>
-    <div class="parts-section">
-      <div class="parts-label">Parts Required</div>
-      <table class="parts-table">
-        <thead><tr><th>Part Number</th><th>Description</th><th style="width:80px">Qty</th></tr></thead>
-        <tbody>
-          <tr><td class="part-num">M570619-0070A</td><td>Slow Close Piston</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="arrow-row warn">→ If arrestor installed but hammer persists → Replace piston with slow-close version &nbsp;M970459-0070A</div>
   </div>
 
   <!-- ═══════════════════════════════════════════════ -->
   <!-- SECTION 5 — INTERMITTENT / GHOST FLUSHING      -->
   <!-- ═══════════════════════════════════════════════ -->
   <div class="sec-head">
-    <h2>Intermittent &nbsp;/ &nbsp;Ghost Flushing</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <h2>Intermittent &nbsp;/ &nbsp;Ghost Flushing</h2>
+      <button class="sec-na-btn" onclick="toggleSection(this)">N/A</button>
+    </div>
   </div>
   <div class="check-wrap">
     <div class="check-item">
@@ -763,23 +749,16 @@
       </div>
       <div class="check-notes"><textarea placeholder="Notes..."></textarea></div>
     </div>
-    <div class="parts-section">
-      <div class="parts-label">Parts Required</div>
-      <table class="parts-table">
-        <thead><tr><th>Part Number</th><th>Description</th><th style="width:80px">Qty</th></tr></thead>
-        <tbody>
-          <tr><td class="part-num">60SXRCT</td><td>RED Sensor Remote (standard sensors)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-          <tr><td class="part-num">60SXRCW</td><td>YELLOW Sensor Remote (wide-angle sensors)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════ -->
   <!-- SECTION 6 — QUICK / POOR FLUSH                 -->
   <!-- ═══════════════════════════════════════════════ -->
   <div class="sec-head">
-    <h2>Quick &nbsp;/ &nbsp;Poor Flush</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <h2>Quick &nbsp;/ &nbsp;Poor Flush</h2>
+      <button class="sec-na-btn" onclick="toggleSection(this)">N/A</button>
+    </div>
   </div>
   <div class="check-wrap">
     <div class="check-item">
@@ -829,6 +808,65 @@
       <tr><td class="ref-num">M870082-007500A</td><td>Sensor Assembly — 0.5 gpf (Urinal)</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
     </tbody>
   </table>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PARTS REFERENCE DIAGRAM                         -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="sec-head" style="margin-top:28px;border-radius:8px 8px 0 0;">
+    <h2>Parts Reference Diagram</h2>
+  </div>
+  <div class="parts-diagram">
+    <img src="data:image/png;base64,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" alt="Selectronic Parts Diagram"/>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PARTS REQUIRED (CONSOLIDATED)                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="sec-head" style="margin-top:20px;border-radius:8px 8px 0 0;">
+    <h2>Parts Required</h2>
+  </div>
+  <div class="check-wrap" style="padding:4px 0 0;">
+    <table class="parts-table" style="width:100%;border-collapse:collapse;margin:0;">
+      <thead><tr><th>Part Number</th><th>Description</th><th style="width:80px">Qty</th></tr></thead>
+      <tbody>
+        <tr><td class="part-num">M970694-0070A</td><td>Solenoid &amp; Piston Assembly</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+        <tr><td class="part-num">M970784-0020A</td><td>Manual Override Button</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+        <tr><td class="part-num">PK01-HAC</td><td>Power Supply (HAC)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+        <tr><td class="part-num">PK01-PAC</td><td>Power Supply (PAC)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+        <tr><td class="part-num">PRX M950361-0070A</td><td>Battery (PRX units)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+        <tr><td class="part-num">A923654-0070A</td><td>Battery (STD units)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+        <tr><td class="part-num">M970459-0070A</td><td>Slow Close Piston</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+        <tr><td class="part-num">605XRCT</td><td>RED Sensor Remote (standard sensors)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+        <tr><td class="part-num">605XRCW</td><td>YELLOW Sensor Remote (wide-angle sensors)</td><td><input type="number" class="qty-input" min="0" placeholder="0"/></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SENSOR PART NUMBERS REFERENCE                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="sec-head" style="margin-top:20px;border-radius:8px 8px 0 0;">
+    <h2>Sensor Assembly Part Numbers by GPF</h2>
+  </div>
+  <table class="ref-table">
+    <thead><tr><th>Part Number</th><th>Description</th><th style="width:80px">Qty</th></tr></thead>
+    <tbody>
+      <tr><td class="ref-num">M870082-0070A</td><td>Sensor Assembly — 0.125 gpf</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
+      <tr><td class="ref-num">M870082-007250A</td><td>Sensor Assembly — 0.5 gpf</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
+      <tr><td class="ref-num">M870082-007200A</td><td>Sensor Assembly — 1.0 gpf</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
+      <tr><td class="ref-num">M870082-007100A</td><td>Sensor Assembly — 1.1 gpf</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
+      <tr><td class="ref-num">M870082-007050A</td><td>Sensor Assembly — 1.28 / 1.6 gpf (WC)</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
+      <tr><td class="ref-num">M870082-007000A</td><td>Sensor Assembly — 1.6 gpf</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
+      <tr><td class="ref-num">M870082-007400A</td><td>Sensor Assembly — 1.28 gpf</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
+      <tr><td class="ref-num">M870082-007500A</td><td>Sensor Assembly — 0.5 gpf (Urinal)</td><td><input type="number" class="qty-input" min="0" placeholder="0" style="border-color:#bbb;"/></td></tr>
+    </tbody>
+  </table>
+
+  <!-- BOTTOM PRINT BUTTON -->
+  <div style="text-align:center;margin:28px 0 0;">
+    <button class="btn-print" onclick="window.print()">&#128424; Print Checklist</button>
+  </div>
+
 
   <!-- FOOTER -->
   <div class="form-footer">
@@ -1120,8 +1158,8 @@ const trees = {
       { label:"&#128123;  Ghost Flushing &#8212; flushes when no one is present", next:"sol_ghost" },
       { label:"&#10060;  Missed Flush &#8212; does not flush after actual use",   next:"sol_missed" }
     ]},
-    sol_ghost:  { type:"solution", style:"info", title:"&#128123; Ghost Flushing &#8212; Reflective Material Near Sensor", body:"Ghost flushing is most commonly caused by reflective material in the sensor&#8217;s detection zone.\n\nCommon causes:\n&#8226; High-visibility (Hi-Viz) vests &#8212; can trigger the sensor\n&#8226; Mirrors, shiny partitions, or polished floor surfaces reflecting light into the sensor\n&#8226; Bright ambient light sources in the sensor field\n\nUse the sensor remote to reduce the Detection Zone range below factory default:\n\n&#8226; Factory Setting: Level 14 = 15.75\" (40 cm)\n&#8226; Maximum: Level 19 = 31.75\" (80 cm)\n\nReduce the level until ghost flushing stops.\n\n&#10145; AFTER ADJUSTING: go to Page 6 on the remote and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"60SXRCT",name:"RED Sensor Remote (standard)"},{num:"60SXRCW",name:"YELLOW Sensor Remote (wide-angle)"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
-    sol_missed: { type:"solution", style:"warn",  title:"&#10060; Missed Flush &#8212; Adjust Detection Zone", body:"The sensor is not reliably detecting the user. Use the sensor remote to increase the detection zone:\n\n&#8226; Factory Default: Level 14 = 15.75\" (40 cm)\n&#8226; Increase if users are being missed\n&#8226; Maximum: Level 19 = 31.75\" (80 cm)\n\nAlso check for objects or signage blocking the sensor field of view.\n\n&#10145; AFTER ADJUSTING: go to Page 6 on the remote and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"60SXRCT",name:"RED Sensor Remote"},{num:"60SXRCW",name:"YELLOW Sensor Remote"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"}
+    sol_ghost:  { type:"solution", style:"info", title:"&#128123; Ghost Flushing &#8212; Reflective Material Near Sensor", body:"Ghost flushing is most commonly caused by reflective material in the sensor&#8217;s detection zone.\n\nCommon causes:\n&#8226; High-visibility (Hi-Viz) vests &#8212; can trigger the sensor\n&#8226; Mirrors, shiny partitions, or polished floor surfaces reflecting light into the sensor\n&#8226; Bright ambient light sources in the sensor field\n\nUse the sensor remote to reduce the Detection Zone range below factory default:\n\n&#8226; Factory Setting: Level 14 = 15.75\" (40 cm)\n&#8226; Maximum: Level 19 = 31.75\" (80 cm)\n\nReduce the level until ghost flushing stops.\n\n&#10145; AFTER ADJUSTING: go to Page 6 on the remote and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"605XRCT",name:"RED Sensor Remote (standard)"},{num:"605XRCW",name:"YELLOW Sensor Remote (wide-angle)"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
+    sol_missed: { type:"solution", style:"warn",  title:"&#10060; Missed Flush &#8212; Adjust Detection Zone", body:"The sensor is not reliably detecting the user. Use the sensor remote to increase the detection zone:\n\n&#8226; Factory Default: Level 14 = 15.75\" (40 cm)\n&#8226; Increase if users are being missed\n&#8226; Maximum: Level 19 = 31.75\" (80 cm)\n\nAlso check for objects or signage blocking the sensor field of view.\n\n&#10145; AFTER ADJUSTING: go to Page 6 on the remote and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"605XRCT",name:"RED Sensor Remote"},{num:"605XRCW",name:"YELLOW Sensor Remote"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"}
   }},
 
   rem: { label:"Remote / Sensor Setup", steps: {
@@ -1138,12 +1176,12 @@ const trees = {
     act_pressok:  { type:"action",   total:5, idx:3, title:"Press OK to Pair", detail:"With CONNECT highlighted, press OK. The sensor LED will flash to confirm pairing.\n\nThe screen then shows three options:\n&#8226; MONITORING &#8212; live flush count, battery %, water usage\n&#8226; CONFIGURATION &#8212; adjust Pages 1&#8211;6\n&#8226; PROFILES &#8212; save/load setting profiles", next:"s_paired" },
     s_paired:     { type:"question", total:5, idx:4, q:"Did the sensor LED flash to confirm connection?", hint:"Also check the battery indicator on the remote. Must be &gt;80% for reliable programming. If &lt;80%, replace the battery first.", yes:"sol_connected", no:"sol_connect_fail" },
     s_noconnect:  { type:"question", total:5, idx:3, q:"Is there any light or response from the sensor at all?", hint:"Check the sensor LED for any activity when the remote is pointed at it.", yes:"sol_retry", no:"sol_nolight" },
-    sol_connected:    { type:"solution", style:"green", title:"&#9989; Remote Connected &#8212; Ready to Program", body:"Paired successfully. Navigate with OK through:\n\n&#8226; MONITORING &#8212; flush count, battery %, water usage\n&#8226; CONFIGURATION &#8212; Pages 1&#8211;6 settings\n&#8226; PROFILES &#8212; save or load profiles\n\n&#9889; Battery: &gt;80% = OK to program. &lt;80% = replace before programming.", parts:[{num:"60SXRCT",name:"RED Remote &#8212; standard sensors"},{num:"60SXRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}] },
+    sol_connected:    { type:"solution", style:"green", title:"&#9989; Remote Connected &#8212; Ready to Program", body:"Paired successfully. Navigate with OK through:\n\n&#8226; MONITORING &#8212; flush count, battery %, water usage\n&#8226; CONFIGURATION &#8212; Pages 1&#8211;6 settings\n&#8226; PROFILES &#8212; save or load profiles\n\n&#9889; Battery: &gt;80% = OK to program. &lt;80% = replace before programming.", parts:[{num:"605XRCT",name:"RED Remote &#8212; standard sensors"},{num:"605XRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}] },
     sol_connect_fail: { type:"solution", style:"warn",  title:"&#9888; Connection Not Confirmed", body:"No LED flash from sensor after pressing OK:\n\n1. Stay within 2&#8211;3\" &#8212; don't move further away\n2. Aim directly at the sensor eye, not at an angle\n3. Check battery &#8212; if &lt;80%, replace before retrying\n4. Arrow back to CONNECT and press OK again", parts:[{num:"A923654-0020A",name:"Battery 6V CR-P2"}] },
     sol_retry:        { type:"solution", style:"warn",  title:"&#128260; Sensor Active &#8212; Retry Pairing", body:"Sensor is responding but CONNECT is not showing:\n\n1. Move to exactly 2&#8211;3\" from the sensor face\n2. Scroll the remote menu until CONNECT appears\n3. Highlight CONNECT with arrow buttons, then press OK", parts:[] },
     sol_nolight:      { type:"solution", style:"warn",  title:"&#9889; No Sensor Response &#8212; Check Power", body:"No light or response from sensor:\n\n1. If using a plug-in power unit, disconnect from outlet and re-plug\n2. Check battery or transformer &#8212; verify 6V DC output\n3. If still no light, replace the battery or transformer", parts:[{num:"A923654-0020A",name:"Battery 6V CR-P2"}], video:"AJ91YSSJEZo"},
-    sol_page1:    { type:"solution", style:"info", title:"&#128207; Page 1 &#8212; Detection Range &#11088; Most Commonly Adjusted", body:"Controls how far the sensor detects a person.\n\n&#9658; HOW TO ADJUST\nUse LEFT / RIGHT arrows to increase or decrease detection range. Current level shows as dots on the display.\n\n&#9658; FACTORY DEFAULTS\n&#8226; Toilet: Level 14 = 15.75\" (40 cm)\n&#8226; Urinal: Level 14 = 15.75\" (40 cm)\n&#8226; Maximum: Level 19 = 31.75\" (80 cm)\n\n&#9658; WHEN TO CHANGE\nIncrease &#8594; sensor missing users\nDecrease &#8594; ghost flushing or reflective surfaces\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"60SXRCT",name:"RED Remote &#8212; standard sensors"},{num:"60SXRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
-    sol_page2:    { type:"solution", style:"info", title:"&#9201; Page 2 &#8212; Delay Time &#11088; Most Commonly Adjusted", body:"Controls two delay settings:\n\n&#9658; DELAY TIME\nTime between sensor detecting person has left and sending the flush signal.\n&#8226; Lower = flushes sooner after user leaves\n&#8226; &#9888; Lower values also reduce battery life\n\n&#9658; FLUSH DELAY\nFrom when person exits sensor range to when valve fires.\n&#8226; For faster flush after exit: set to 5 or below\n&#8226; For immediate flush on exit: lower toward zero\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"60SXRCT",name:"RED Remote &#8212; standard sensors"},{num:"60SXRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
+    sol_page1:    { type:"solution", style:"info", title:"&#128207; Page 1 &#8212; Detection Range &#11088; Most Commonly Adjusted", body:"Controls how far the sensor detects a person.\n\n&#9658; HOW TO ADJUST\nUse LEFT / RIGHT arrows to increase or decrease detection range. Current level shows as dots on the display.\n\n&#9658; FACTORY DEFAULTS\n&#8226; Toilet: Level 14 = 15.75\" (40 cm)\n&#8226; Urinal: Level 14 = 15.75\" (40 cm)\n&#8226; Maximum: Level 19 = 31.75\" (80 cm)\n\n&#9658; WHEN TO CHANGE\nIncrease &#8594; sensor missing users\nDecrease &#8594; ghost flushing or reflective surfaces\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"605XRCT",name:"RED Remote &#8212; standard sensors"},{num:"605XRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
+    sol_page2:    { type:"solution", style:"info", title:"&#9201; Page 2 &#8212; Delay Time &#11088; Most Commonly Adjusted", body:"Controls two delay settings:\n\n&#9658; DELAY TIME\nTime between sensor detecting person has left and sending the flush signal.\n&#8226; Lower = flushes sooner after user leaves\n&#8226; &#9888; Lower values also reduce battery life\n\n&#9658; FLUSH DELAY\nFrom when person exits sensor range to when valve fires.\n&#8226; For faster flush after exit: set to 5 or below\n&#8226; For immediate flush on exit: lower toward zero\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"605XRCT",name:"RED Remote &#8212; standard sensors"},{num:"605XRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
     sol_page3:    { type:"solution", style:"info", title:"&#128167; Page 3 &#8212; Flush Volume &amp; Timing", body:"Controls flush volume and flush activation time.\n\n&#9658; FLUSH VOLUME: adjusts water used per flush cycle.\n&#9658; FLASH TIME: customizes and can decrease total flush activation time.\n\n&#9888; Pages 3 and beyond are site-specific &#8212; adjust only as needed. The first 2 pages cover most day-to-day adjustments.\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
     sol_send:     { type:"solution", style:"info", title:"&#128190; Page 6 &#8212; Send / Save Settings to Sensor", body:"After adjusting any settings, you must SEND them:\n\n1. Hold remote 2&#8211;3\" directly in front of the sensor\n2. Navigate to Page 6 on the remote display\n3. Press DOWN arrow to highlight SEND\n4. Press OK\n5. Select YES and press OK\n\n&#9658; SUCCESS: display shows 'Programming was saved to flash'\n\n&#9658; IF SEND FAILS:\n&#8226; Check battery &#8212; low battery prevents reliable transmission\n&#8226; Confirm remote is aimed directly at sensor eye\n&#8226; Retry from 2&#8211;3\" distance", parts:[{num:"A923654-0020A",name:"Battery 6V CR-P2"}] },
     sol_monitor:  { type:"solution", style:"info", title:"&#128202; Monitoring &#8212; Live Sensor Data", body:"After connecting, press OK on MONITORING to view:\n\n&#8226; Flush count &#8212; total flushes recorded\n&#8226; Battery level &#8212; percentage remaining\n&#8226; Water usage &#8212; consumption data\n&#8226; Counter/Balance &#8212; additional diagnostics\n\n&#9889; BATTERY INDICATOR\n&gt;80% = Ready / OK &#8212; safe to program\n&lt;80% = Replace battery before programming", parts:[{num:"A923654-0020A",name:"Battery 6V CR-P2"},{num:"A923654-0070A",name:"CRV-2 Battery"}] }
@@ -1155,7 +1193,7 @@ const trees = {
     s2: { type:"question", total:3, idx:1, q:"Using the manual override button, do you get a complete, full-volume flush?", hint:"Press and hold the manual override button. Compare the volume and duration of this flush to what the sensor produces automatically.", yes:"s3", no:"sol_mechanical" },
     s3: { type:"question", total:3, idx:2, q:"Is the automatic (sensor-triggered) flush noticeably shorter or weaker than the manual flush?", hint:"Time the flush duration triggered by the sensor, then compare it to the manual flush from the step above.", yes:"sol_volume", no:"sol_luck" },
     sol_mechanical: { type:"solution", style:"warn", title:"&#128296; Inspect Piston Assembly &amp; O-Ring", body:"The manual flush itself is incomplete or weak, pointing to a mechanical restriction rather than a settings issue.\n\nInspect the piston assembly and o-ring for debris, mineral buildup, or wear. Clean or replace as needed.", parts:[{num:"M970694-0070A", name:"Solenoid &amp; Piston Assembly"}], video:"ky_8QZDoa-A"},
-    sol_volume: { type:"solution", style:"info", title:"&#128167; Adjust Flush Volume &amp; Timing (Remote Page 3)", body:"Manual flush is full and complete, but the automatic flush is short &#8212; this points to the flush volume or activation time setting on the sensor, not a mechanical fault.\n\nUsing the sensor remote:\n&#9658; Page 3 &#8212; FLUSH VOLUME: increase water used per flush cycle\n&#9658; Page 3 &#8212; FLASH TIME: increase total flush activation time\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"60SXRCT",name:"RED Remote &#8212; standard sensors"},{num:"60SXRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
+    sol_volume: { type:"solution", style:"info", title:"&#128167; Adjust Flush Volume &amp; Timing (Remote Page 3)", body:"Manual flush is full and complete, but the automatic flush is short &#8212; this points to the flush volume or activation time setting on the sensor, not a mechanical fault.\n\nUsing the sensor remote:\n&#9658; Page 3 &#8212; FLUSH VOLUME: increase water used per flush cycle\n&#9658; Page 3 &#8212; FLASH TIME: increase total flush activation time\n\n&#9658; AFTER ADJUSTING: go to Page 6 and SEND.\n\n⚠️ SENSOR TYPE: Check the LED light on your sensor. If it glows Amber — follow this procedure and use the video below. If it glows Red (older units) — the new remote is not compatible with your sensor. Contact support for Red sensor service.", parts:[{num:"605XRCT",name:"RED Remote &#8212; standard sensors"},{num:"605XRCW",name:"YELLOW Remote &#8212; wide-angle sensors"}], video:"x_YR1qeV8cw", videoLabel:"Amber Sensor Units"},
     sol_luck: { type:"solution", style:"warn", title:"&#128640; Escalate &#8212; Further Diagnosis Needed", body:"Standard troubleshooting steps have been exhausted.\n\nContact American Standard technical support or escalate to a licensed service technician for further diagnosis.", parts:[] }
   }}
 };
@@ -1180,6 +1218,15 @@ function start(treeId) {
   setActiveTab(treeId);
   goTo(Object.keys(currentTree.steps)[0]);
 }
+function toggleSection(btn) {
+  var secHead = btn.closest('.sec-head');
+  var wrap = secHead ? secHead.nextElementSibling : null;
+  if (!wrap) return;
+  var isNA = wrap.classList.toggle('sec-collapsed');
+  btn.classList.toggle('sec-na-active', isNA);
+  btn.textContent = isNA ? 'Undo N/A' : 'N/A';
+}
+
 function showJobChecklist() {
   currentTree = null; history = [];
   document.getElementById("home").style.display = "none";
