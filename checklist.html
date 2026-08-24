@@ -397,7 +397,8 @@
 /* Print: keep job-screen, hide clutter */
 @media print{
   #home-screen,#flow-screen,.sec-na-btn,.btn-print,.cl-btn-clear{display:none!important;}
-  #job-screen{display:block!important;}
+  #job-screen{display:block!important;overflow:visible!important;height:auto!important;max-height:none!important;}
+  .job-inner,.cl-content{overflow:visible!important;height:auto!important;}
 }
 
 .arrow-cb{width:14px;height:14px;accent-color:#7B4F00;cursor:pointer;vertical-align:middle;margin:0 2px 1px 0;}
