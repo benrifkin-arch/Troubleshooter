@@ -418,10 +418,11 @@
 .cl-cb-row{display:flex;gap:16px;padding:4px 0;}
 .cl-cb{display:flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:400;cursor:pointer;color:#333;text-transform:none;letter-spacing:0;}
 .cl-cb input[type="checkbox"]{width:15px;height:15px;accent-color:#CC0000;cursor:pointer;flex-shrink:0;}
-.cl-checks{background:white;border:1px solid #F2C8C8;border-top:none;border-radius:0 0 6px 6px;padding:8px 14px;}
-.cl-check{display:flex;align-items:flex-start;gap:9px;padding:6px 0;font-size:0.88rem;color:#333;border-bottom:1px dotted #eee;cursor:pointer;line-height:1.4;}
-.cl-check:last-child{border-bottom:none;}
-.cl-check input[type="checkbox"]{width:15px;height:15px;accent-color:#CC0000;cursor:pointer;flex-shrink:0;margin-top:1px;}
+.cl-checks{background:white;border:1px solid #F2C8C8;border-top:none;border-radius:0 0 6px 6px;padding:4px 14px;}
+.cl-yn-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px dotted #eee;gap:12px;}
+.cl-yn-row:last-child{border-bottom:none;}
+.cl-yn-q{font-size:0.88rem;color:#333;flex:1;line-height:1.4;}
+.cl-yn-btns{display:flex;gap:14px;flex-shrink:0;}
 .cl-inline{border:none;border-bottom:1.5px solid #ccc;width:80px;padding:0 2px;font-size:0.88rem;font-family:inherit;background:transparent;vertical-align:middle;}
 .cl-inline:focus{outline:none;border-bottom-color:#CC0000;}
 .cl-footer-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;padding-top:14px;border-top:2px solid #F2C8C8;}
@@ -441,6 +442,7 @@
   .cl-form,.cl-parts-grid{grid-template-columns:1fr;}
   .cl-row.half{grid-column:1/-1;}
   .cl-footer-row{grid-template-columns:1fr;}
+  .cl-yn-row{flex-wrap:wrap;}
 }
 @media print{
   .cl-section-head{background:#CC0000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
@@ -513,7 +515,7 @@
 
     <div class="cl-content" style="max-width:860px;margin:0 auto;padding:16px 20px 60px;">
 
-      <!-- ══ PAGE 1: INITIAL INFORMATION ══ -->
+      <!-- PAGE 1: INITIAL INFORMATION -->
       <div class="cl-section-head">Initial Information <span style="font-weight:400;font-size:0.85rem;">(Required for all scenarios)</span></div>
 
       <div class="cl-form">
@@ -573,50 +575,50 @@
         </div>
         <div class="cl-row full" style="margin-top:4px;">
           <label>Notes / Additional Details</label>
-          <textarea class="cl-textarea" rows="6" placeholder=""></textarea>
+          <textarea class="cl-textarea" rows="6"></textarea>
         </div>
       </div>
 
-      <!-- ══ PAGE 2: DIAGNOSTIC SECTIONS ══ -->
+      <!-- PAGE 2: DIAGNOSTIC SECTIONS -->
       <div class="cl-section-head" style="margin-top:24px;">Unit Does Not Function <span style="font-weight:400;">(No Flush) or only flushes manually</span></div>
       <div class="cl-checks">
-        <label class="cl-check"><input type="checkbox"> Is the supply stop fully open?</label>
-        <label class="cl-check"><input type="checkbox"> Repeated Double Flash on Sensor?</label>
-        <label class="cl-check"><input type="checkbox"> If hardwired, &gt;10&apos; of wire between units?</label>
-        <label class="cl-check"><input type="checkbox"> Does the sensor flash after power cycle (30–60 sec)?</label>
-        <label class="cl-check"><input type="checkbox"> Does Solenoid click when activating the sensor (hold hand 10–12 sec then remove)?</label>
-        <label class="cl-check"><input type="checkbox"> Does the manual override button work (press 3+ sec)?</label>
-        <label class="cl-check"><input type="checkbox"> Are connections plugged in solid / no damage / no bent pins?</label>
+        <div class="cl-yn-row"><span class="cl-yn-q">Is the supply stop fully open?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Repeated Double Flash on Sensor?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">If hardwired, &gt;10&apos; of wire between units?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Does the sensor flash after power cycle (30–60 sec)?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Does Solenoid click when activating via the sensor?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Does the manual override button work (press 3+ sec)?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Are connections plugged in solid / no damage / no bent pins?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
       </div>
 
       <div class="cl-section-head">Continuously Flushing / Running</div>
       <div class="cl-checks">
-        <label class="cl-check"><input type="checkbox"> Does the unit stop flushing when the manual button is released?</label>
-        <label class="cl-check"><input type="checkbox"> Manual override is stuck — does it stop when pulling out on the button?</label>
-        <label class="cl-check"><input type="checkbox"> Was piston/solenoid removed to check for debris / O-ring damage?</label>
-        <label class="cl-check"><input type="checkbox"> Did priming (flush a few times) help?</label>
+        <div class="cl-yn-row"><span class="cl-yn-q">Does the unit stop flushing when the manual button is released?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Manual override is stuck, does it stop when pulling out on the button?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Was the piston/solenoid removed to check for debris / O-ring damage?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Did priming (flush a few times) help?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
       </div>
 
       <div class="cl-section-head">Water Hammer</div>
       <div class="cl-checks">
-        <label class="cl-check"><input type="checkbox"> Static pressure &gt;80 PSI (checked at valve)?</label>
-        <label class="cl-check"><input type="checkbox"> Water hammer arrestors installed and proper location?</label>
+        <div class="cl-yn-row"><span class="cl-yn-q">Static pressure &gt;80 PSI (checked at valve with pressure gauge)?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Water hammer arrestors installed and proper location?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
       </div>
 
       <div class="cl-section-head">Intermittent / Ghost Flushing</div>
       <div class="cl-checks">
-        <label class="cl-check"><input type="checkbox"> Detection Zone checked / adjusted (remote factory setting 14)?</label>
-        <label class="cl-check"><input type="checkbox"> Are there possible reflections (hi-vis vest, mirrors, shiny surfaces)?</label>
+        <div class="cl-yn-row"><span class="cl-yn-q">Detection Zone checked / adjusted (remote factory setting 14)?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Are there possible reflections (hi-vis vest, mirrors, shiny surfaces)?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
       </div>
 
       <div class="cl-section-head">Quick / Poor Flush</div>
       <div class="cl-checks">
-        <label class="cl-check"><input type="checkbox"> How long is the flush duration (seconds): <input type="text" class="cl-inline" placeholder="______"></label>
-        <label class="cl-check"><input type="checkbox"> Can you get a complete flush using the manual override button?</label>
-        <label class="cl-check"><input type="checkbox"> Is the supply stop fully open?</label>
+        <div class="cl-yn-row"><span class="cl-yn-q">How long is the flush duration (seconds): <input type="text" class="cl-inline" placeholder="______"></span></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Can you get a complete flush using the manual override button?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
+        <div class="cl-yn-row"><span class="cl-yn-q">Is the supply stop fully open?</span><div class="cl-yn-btns"><label class="cl-cb"><input type="checkbox"> Yes</label><label class="cl-cb"><input type="checkbox"> No</label></div></div>
       </div>
 
-      <!-- Tech / Date row -->
+      <!-- Tech / Date -->
       <div class="cl-footer-row">
         <div class="cl-footer-field">
           <label>Technician</label>
@@ -628,8 +630,15 @@
         </div>
       </div>
 
-      <!-- ══ PAGE 3: REP KIT PARTS ══ -->
-      <div class="cl-section-head" style="margin-top:28px;">Rep Kit Part List &nbsp;<span style="font-weight:400;font-size:0.85rem;">— Fill in parts used</span></div>
+      <!-- Contact line -->
+      <div style="text-align:center;margin:12px 0 20px;font-size:0.82rem;color:#555;">
+        <strong>American Standard Concierge</strong>&nbsp;&nbsp;
+        <a href="mailto:ASConcierge@lixil.com">ASConcierge@lixil.com</a>&nbsp;&nbsp;
+        630-872-5570
+      </div>
+
+      <!-- PAGE 3: REP KIT PARTS -->
+      <div class="cl-section-head">Rep Kit Part List FV &nbsp;<span style="font-weight:400;font-size:0.85rem;">— Fill in parts used</span></div>
       <div class="cl-parts-grid">
         <div class="cl-parts-col">
           <div class="cl-parts-col-head">Selectronic Diaphragm</div>
@@ -659,22 +668,11 @@
         </div>
       </div>
 
-      <!-- Continued notes -->
       <div class="cl-section-head" style="margin-top:20px;">Notes / Additional Details (cont'd)</div>
-      <textarea class="cl-textarea" rows="10" placeholder=""></textarea>
+      <textarea class="cl-textarea" rows="15"></textarea>
 
-      <!-- Bottom print button -->
       <div style="text-align:center;margin:24px 0 0;">
         <button class="btn-print" onclick="window.print()">&#128424; Print Checklist</button>
-      </div>
-
-      <!-- Contact footer -->
-      <div class="form-footer" style="margin-top:20px;">
-        <div class="footer-right" style="text-align:center;width:100%;">
-          <strong>American Standard Concierge</strong>&nbsp;&nbsp;
-          <a href="mailto:ASConcierge@lixil.com">ASConcierge@lixil.com</a>&nbsp;&nbsp;
-          630-872-5570
-        </div>
       </div>
 
     </div><!-- /.cl-content -->
