@@ -1122,9 +1122,7 @@ function render(stepId) {
 
 
   function printChecklist() {
-    // Robust print: focus window first, then print
-    window.focus();
-    setTimeout(function(){ window.print(); }, 100);
+    window.print();
   }
 
   function emailChecklist() {
