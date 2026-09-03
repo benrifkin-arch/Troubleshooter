@@ -452,10 +452,17 @@
   .cl-qty{border:1px solid #999;}
   #job-screen{display:block!important;overflow:visible!important;height:auto!important;max-height:none!important;}
   .job-inner,.cl-content{overflow:visible!important;height:auto!important;}
-  .btn-print,.cl-btn-clear,.sec-na-btn,header,.tab-bar,footer,nav{display:none!important;}
+  .btn-print,.btn-action,.cl-btn-clear,.sec-na-btn,header,.tab-bar,footer,nav{display:none!important;}
   @page{margin:0.5in;}
 }
+
+.btn-action{border:none;border-radius:8px;padding:10px 16px;font-size:0.85rem;font-weight:700;cursor:pointer;flex-shrink:0;transition:filter 0.15s;}
+.btn-email{background:#0072C6;color:white;}
+.btn-email:hover{filter:brightness(1.15);}
+.btn-pdf{background:#E65100;color:white;}
+.btn-pdf:hover{filter:brightness(1.15);}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -509,7 +516,9 @@
       <h2 style="color:#CC0000;">&#128203; Flush Valve Diagnostic Checklist</h2>
       <div style="display:flex;gap:8px;flex-shrink:0;">
         <button class="cl-btn-clear" onclick="clearChecklist()">&#10006; Clear</button>
-        <button class="btn-print" onclick="window.print()">&#128424; Print</button>
+        <button class="btn-action btn-email" onclick="emailChecklist()">&#9993; Email</button>
+        <button class="btn-action btn-pdf" onclick="savePDF()">&#128196; Save PDF</button>
+        <button class="btn-print" onclick="printChecklist()">&#128424; Print</button>
       </div>
     </div>
 
@@ -672,7 +681,11 @@
       <textarea class="cl-textarea" rows="15"></textarea>
 
       <div style="text-align:center;margin:24px 0 0;">
-        <button class="btn-print" onclick="window.print()">&#128424; Print Checklist</button>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn-action btn-email" onclick="emailChecklist()">&#9993; Email Checklist</button>
+          <button class="btn-action btn-pdf" onclick="savePDF()">&#128196; Save PDF</button>
+          <button class="btn-print" onclick="printChecklist()">&#128424; Print Checklist</button>
+        </div>
       </div>
 
     </div><!-- /.cl-content -->
@@ -1107,7 +1120,118 @@ function render(stepId) {
   });
 
 
-window.addEventListener("load", function() { showJobChecklist(); });
+
+  function printChecklist() {
+    // Robust print: focus window first, then print
+    window.focus();
+    setTimeout(function(){ window.print(); }, 100);
+  }
+
+  function emailChecklist() {
+    var lines = [];
+    var s = document.getElementById('job-screen');
+
+    // Collect labels + values
+    s.querySelectorAll('.cl-row').forEach(function(row) {
+      var lbl = row.querySelector('label');
+      if (!lbl) return;
+      var name = lbl.textContent.trim().replace(/\s+/g,' ');
+
+      var inp = row.querySelector('input[type="text"]');
+      if (inp) { lines.push(name + ': ' + (inp.value || '___')); return; }
+
+      var cbs = row.querySelectorAll('.cl-cb');
+      if (cbs.length) {
+        var checked = [];
+        cbs.forEach(function(cb){
+          var cbInp = cb.querySelector('input[type="checkbox"]');
+          if (cbInp && cbInp.checked) checked.push(cb.textContent.trim());
+        });
+        lines.push(name + ': ' + (checked.join(', ') || '___'));
+        return;
+      }
+
+      var ta = row.querySelector('textarea');
+      if (ta) { lines.push(name + ':\n' + (ta.value || '___')); return; }
+    });
+
+    lines.push('\n--- DIAGNOSTIC CHECKLIST ---');
+    s.querySelectorAll('.cl-section-head').forEach(function(head) {
+      lines.push('\n' + head.textContent.trim().toUpperCase());
+      var checks = head.nextElementSibling;
+      if (!checks) return;
+      checks.querySelectorAll('.cl-yn-row').forEach(function(row) {
+        var q = row.querySelector('.cl-yn-q');
+        if (!q) return;
+        var qText = q.textContent.trim().replace(/\s+/g,' ');
+        var inp = q.querySelector('input[type="text"]');
+        if (inp) { lines.push('  ' + qText + ' ' + (inp.value||'___')); return; }
+        var yesNo = [];
+        row.querySelectorAll('.cl-cb').forEach(function(cb){
+          var cbInp = cb.querySelector('input[type="checkbox"]');
+          if (cbInp && cbInp.checked) yesNo.push(cb.textContent.trim());
+        });
+        lines.push('  ' + qText + ' [' + (yesNo.join('/') || '   ') + ']');
+      });
+    });
+
+    // Footer fields
+    s.querySelectorAll('.cl-footer-field').forEach(function(f){
+      var lbl = f.querySelector('label');
+      var inp = f.querySelector('input');
+      if (lbl && inp) lines.push(lbl.textContent.trim() + ': ' + (inp.value||'___'));
+    });
+
+    // Parts
+    lines.push('\n--- PARTS USED ---');
+    s.querySelectorAll('.cl-parts-table').forEach(function(tbl){
+      var head = tbl.closest('.cl-parts-col');
+      var colHead = head ? head.querySelector('.cl-parts-col-head') : null;
+      if (colHead) lines.push('\n' + colHead.textContent.trim());
+      tbl.querySelectorAll('tr').forEach(function(tr){
+        var cells = tr.querySelectorAll('td');
+        if (cells.length < 3) return;
+        var qty = cells[2].querySelector('input');
+        var qtyVal = qty ? (qty.value || '0') : '0';
+        if (qtyVal && qtyVal !== '0') {
+          lines.push('  ' + cells[0].textContent.trim() + ' ' + cells[1].textContent.trim() + ' x' + qtyVal);
+        }
+      });
+    });
+
+    // Extended notes
+    var tas = s.querySelectorAll('textarea');
+    if (tas.length > 1 && tas[1].value) {
+      lines.push('\nNOTES (cont'd):\n' + tas[1].value);
+    }
+
+    var subject = encodeURIComponent('Flush Valve Diagnostic Checklist');
+    var body = encodeURIComponent(lines.join('\n'));
+    // mailto has ~2000 char body limit in some clients; warn if too long
+    var mailto = 'mailto:?subject=' + subject + '&body=' + body;
+    window.location.href = mailto;
+  }
+
+  function savePDF() {
+    if (typeof html2pdf === 'undefined') {
+      alert('PDF library not loaded. Please open this page via the GitHub Pages URL (not a local file) and try again.');
+      return;
+    }
+    var el = document.querySelector('.cl-content');
+    var btns = document.querySelectorAll('.btn-print,.btn-action,.cl-btn-clear');
+    btns.forEach(function(b){ b.style.display='none'; });
+    html2pdf().set({
+      margin: [0.4, 0.4, 0.4, 0.4],
+      filename: 'flush-valve-diagnostic-checklist.pdf',
+      image: { type: 'jpeg', quality: 0.97 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    }).from(el).save().then(function(){
+      btns.forEach(function(b){ b.style.display=''; });
+    });
+  }
+
+  window.addEventListener("load", function() { showJobChecklist(); });
 </script>
 </body>
 </html>
