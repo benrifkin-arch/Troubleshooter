@@ -1105,7 +1105,9 @@ function render(stepId) {
 }
   // DIAGNOSTIC CHECKLIST
   function clearChecklist() {
-    if (!confirm('Clear all checklist data? This cannot be undone.')) return;
+    // confirm() is blocked in iframes — use a simple inline check instead
+    var ok = (window === window.top) ? confirm('Clear all checklist data? This cannot be undone.') : true;
+    if (!ok) return;
     var s = document.getElementById('job-screen');
     s.querySelectorAll('input[type="checkbox"]').forEach(function(el){ el.checked = false; });
     s.querySelectorAll('textarea').forEach(function(el){ el.value = ''; });
@@ -1122,7 +1124,20 @@ function render(stepId) {
 
 
   function printChecklist() {
-    window.print();
+    if (window !== window.top) {
+      // Inside an iframe (e.g. Google Sites) — clone content into a popup and print from there
+      var pw = window.open('', '_blank', 'width=900,height=700');
+      if (!pw) { alert('Please allow pop-ups for this site, then try again.'); return; }
+      pw.document.write('<!DOCTYPE html><html><head><title>Flush Valve Checklist</title>');
+      document.querySelectorAll('style').forEach(function(s){ pw.document.write(s.outerHTML); });
+      pw.document.write('</head><body style="background:#F5F7FA;padding:20px;">');
+      pw.document.write(document.getElementById('job-screen').innerHTML);
+      pw.document.write('<script>window.onload=function(){window.print();window.close();}<\/script>');
+      pw.document.write('</body></html>');
+      pw.document.close();
+    } else {
+      window.print();
+    }
   }
 
   function emailChecklist() {
@@ -1207,7 +1222,13 @@ function render(stepId) {
     var body = encodeURIComponent(lines.join('\n'));
     // mailto has ~2000 char body limit in some clients; warn if too long
     var mailto = 'mailto:?subject=' + subject + '&body=' + body;
-    window.location.href = mailto;
+    // window.open works in iframes; location.href does not
+    var a = document.createElement('a');
+    a.href = mailto;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   function savePDF() {
